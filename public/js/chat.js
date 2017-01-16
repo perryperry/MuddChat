@@ -44,33 +44,46 @@ $(document).ready(function(){
 		}
 
 		$('contentWrap').show();
-			$nickForm.submit(function(e){
-				console.log("Submitting user name");
-				e.preventDefault();
-				username = $nickBox.val().toLowerCase();
-				console.log("username: " + username);
-				socket.emit('new user', username, function(data){
-					if(data) {
-						$('#loginWrapper').hide();
-						$('#contentWrap').show();
-					} else {
-						$nickError.html('That username is already taken');
-					}
-				});
-				$nickBox.val('');
+
+		// #####################################################################
+		//							User Name submission
+		// #####################################################################
+
+		$nickForm.submit(function(e){
+			e.preventDefault();
+			username = $nickBox.val().trim().toLowerCase();
+			console.log("Submitting user name: " + username);
+
+			socket.emit('new user', username, function(data){
+				if(data) {
+					$('#loginWrapper').fadeOut(8700, 'linear');
+					$('#contentWrap').fadeIn(8700, 'linear');
+				} else {
+					$nickError.html('That username is already taken');
+				}
 			});
 
-			// Submit message to server
-			$messageForm.submit(function(e){
-				e.preventDefault();
-				var emojiData = $("#emojiButton").attr("src");
-				//if($messageBox.val()) {
-				socket.emit('send-message', {emoji: emojiData, msg: $messageBox.val(), username: username}, function(data) {
-					$chat.append('<span class="error"><b>' + data + "<span><hr>");
-				});
-				$messageBox.val('');
-				//}
+			$nickBox.val('');
+			$("#audioPlayer")[0].play();
+		});
+
+		// #####################################################################
+		//							Message to Server submission
+		// #####################################################################
+
+		$messageForm.submit(function(e){
+			e.preventDefault();
+			// play send music
+			$("#audioPlayer").attr("src", "/audio/send.mp3");
+			$("#audioPlayer")[0].play();
+			var emojiData = $("#emojiButton").attr("src");
+			//if($messageBox.val()) {
+			socket.emit('send-message', {emoji: emojiData, msg: $messageBox.val(), username: username}, function(data) {
+				$chat.append('<span class="error"><b>' + data + "<span><hr>");
 			});
+			$messageBox.val('');
+			//}
+		});
 
 			// Helper function
 			// moves the cursor in the text field to a specific focus range
@@ -166,7 +179,9 @@ $(document).ready(function(){
 			// receive new public message
 			socket.on('new-message', function(data) {
 				if(data.nick != username) {
-					addChatBubble("talk-bubble round talktext", data, "leftside");
+					$("#audioPlayer").attr("src", "/audio/receive.mp3");
+					$("#audioPlayer")[0].play();
+					addChatBubble("talk-bubble round talktext notprivate", data, "leftside");
 					// Update the tab's notifications if this tab isn't focused on
 					if(! window.onfocus) {
 					    notifications++;
@@ -202,8 +217,12 @@ $(document).ready(function(){
 			socket.on('private-message', function(data){
 				if(data.nick != username) {
 					addChatBubble("talk-bubble round talktext privateMsg", data, "leftside");
+					$("#audioPlayer").attr("src", "/audio/privateReceive.mp3");
+					$("#audioPlayer")[0].play();
 				} else {
 					addChatBubble("talk-bubble round talktext selfMessage privateMsg", data, "rightside");
+					$("#audioPlayer").attr("src", "/audio/privateSend.mp3");
+					$("#audioPlayer")[0].play();
 				}
 				shiftChatWindow();
 			});

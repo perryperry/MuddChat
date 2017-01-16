@@ -1,3 +1,5 @@
+
+
 /*Top level emoji dimension, 
 other classes to build upon this*/
 .emoji {
@@ -72,6 +74,7 @@ other classes to build upon this*/
   	/*position: relative;
 	height: auto;*/
 	background-color: white;
+	box-shadow: 1px 1px 10px white;
 }
 .border{
   border: 8px solid #666;
@@ -128,6 +131,7 @@ other classes to build upon this*/
 .error {
 	color : red;
 }
+
 .new-message {
 	position:absolute;
 	border: solid 1px #c9c9c9;
@@ -143,7 +147,8 @@ other classes to build upon this*/
 .privateMsg {
 	background-color: #f45c42;
 	color: white;
-	opacity: 0.5;
+	opacity: 0.8;
+	box-shadow: 1px 1px 10px #f45c42;
 }
 
 .users {
@@ -157,7 +162,7 @@ other classes to build upon this*/
 	position: relative;
 	display: block;
 	margin: auto;
-	margin-top:50%;
+	margin-top: 200px;
 }
 
 .title {
