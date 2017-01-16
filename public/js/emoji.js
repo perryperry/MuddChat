@@ -30,11 +30,11 @@ $(document).ready(function(){
 	$('#emojiButton').on('click',function(){
 		if(! isEmojiMenu) {
 			$("#emojiSelectionWrapper").show();
-			$("#title").hide();
+			
 			isEmojiMenu = true;
 		} else {
 			$("#emojiSelectionWrapper").hide();
-			$("#title").show();
+			
 			isEmojiMenu = false;
 		}
 	});
@@ -42,8 +42,7 @@ $(document).ready(function(){
 	$(document).on('click', '.emojiChoice', function() {
 		var src = $(this).attr("src");
 		// $('#emojiSelectionWrapper').empty();
-		$("#title").show();
-		$("#emojiSelectionWrapper").hide();
+		// $("#emojiSelectionWrapper").hide();
 		console.log("Selected emoji: " + src);
 		$('#emojiButton').attr("src", src);
 	});

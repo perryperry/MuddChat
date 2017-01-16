@@ -30,7 +30,11 @@ io.on('connection', function(socket) {
 
 	// receive socket's message
 	socket.on('send-message', function(data, callback){
-		console.log("Received data: " + data);
+		console.log("Received data from: " + data.username);
+
+		socket.nickname = data.username;
+		users[socket.nickname] = socket;
+
 		var emoji = data.emoji;
 		var msg = data.msg.trim();
 		// check if private message, protol is @username
@@ -54,6 +58,10 @@ io.on('connection', function(socket) {
 				callback('Error: include a message');
 			}
 		} else {
+			if(! users[socket.nickname]) {
+
+			}
+
 			// sends to everyone, including this client
 			io.sockets.emit('new-message', {msg: data.msg, emoji: data.emoji,  nick: socket.nickname});
 			// would send to everyone else, except this client

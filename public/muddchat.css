@@ -1,32 +1,50 @@
+/*Top level emoji dimension, 
+other classes to build upon this*/
 .emoji {
 	z-index: 200;
-	float:left;
 	width:50px;
 	height:50px;
 	opacity: 1;
+	float:left;
 }
 
 .emojiChoice {
-	margin: 10px;
 	display: inline-block;
 }
 
+.emojiChat {
+	margin-right: 5px;
+}
+
 #emojiButton {
-	
 	margin-bottom: 5px;
 	margin-left: 5px;
+	float:right;
+
 }
+
+#emojiButton:active {
+	width: 48px;
+	height: 48px;
+}
+#emojiButton:hover {
+	cursor:pointer;
+}
+
 #emojiSelectionWrapper {
 	display: none;
-	position: fixed;
+	position: absolute;
 	top:10px;
-	max-width:23%;
+	max-width:205px;
+	min-width: 50px;
 	height: 79%;
 	right:0;
 	background-color: white;
 	border-bottom-right-radius: 10px;
 	overflow: scroll;
 	z-index: 200;
+	padding-left:5px;
+	padding-right:5px;
 }
 
 #emojiSelectionWrapper::-webkit-scrollbar { 
@@ -48,6 +66,7 @@
 	opacity: 0.8;
 	margin: 8px;
 	max-width:45%;
+	min-height: 50px;
 	word-wrap: break-word;
   	/*display: inline-block;*/
   	/*position: relative;
@@ -81,12 +100,17 @@
 }
 
 .username {
-	position: absolute;
-   margin-left: auto ;
-  margin-right: auto ;
-  margin-top: 10px;
-  text-align: center;
-  color: #a0a0a0;
+  color: black;
+  opacity:.8;
+  margin-top: 3px;
+}
+
+.leftside {
+	margin-left: 35px;
+}
+
+.rightside {
+	margin-left: 52%;
 }
 
 #contentWrap{
@@ -123,32 +147,46 @@
 }
 
 .users {
-	float: right;
-	display: inline;
+	float: left;
 	font-family: 'Ubuntu', sans-serif;
+	padding: 10px;
 }
+
+/* Login field */
+#nickname {
+	position: relative;
+	display: block;
+	margin: auto;
+	margin-top:50%;
+}
+
 .title {
-	position: absolute;
-	text-align: center;
+	display: block;
+	margin: auto;
 	color:white;
-	font-size: 300px;
-	  color: #fff;
+	font-size: 280px;
+	color: #fff;
     text-shadow: #000 0px 0px 1px;
     -webkit-font-smoothing: antialiased;
 	font-family: 'Fredoka One', cursive;
 	width:100%;
 	z-index: 100;
+	top:0px;
+}
+.time {
+	position: relative;
+	float: right;
 }
 .fade {
    opacity: 1;
-   transition: opacity 1.5s ease-in-out;
-   -moz-transition: opacity 1.5s ease-in-out;
-   -webkit-transition: opacity 1.5s ease-in-out;
+   transition: opacity 5s ease-out;
+   -moz-transition: opacity 5s ease-out;
+   -webkit-transition: opacity 5s ease-out;
  }
 
 .fade:hover {
-  		opacity: 0.0;
-  }
+  	opacity: 0.0;
+}
 
 .chatImg {
 	width:35%;
@@ -157,7 +195,6 @@
 }
 
 input[type=text] {
-	
 	padding: 10px;
   	border: solid 5px #c9c9c9;
   	border-radius: 8px;
@@ -176,6 +213,7 @@ input[type=text]:focus {
 }
 
 #loginWrapper{
+	position: absolute;
 	top: 0px;
 	left: 0px;
 	width: 100%;
@@ -183,16 +221,6 @@ input[type=text]:focus {
 }
 #message {
 	margin-top: 10px;
-	width:90%;
+	width:88%;
 	float:left;
-}
-#setNick{
-
-}
-#nickname {
-	z-index: 999;
-	position: absolute;
-	display: block;
-    margin: auto;
-    width: 40%;
 }
