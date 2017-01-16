@@ -81,6 +81,7 @@
 }
 
 .username {
+	position: absolute;
    margin-left: auto ;
   margin-right: auto ;
   margin-top: 10px;
@@ -127,22 +128,27 @@
 	font-family: 'Ubuntu', sans-serif;
 }
 .title {
-	position: fixed;
-	background-color: #f45c42;
+	position: absolute;
+	text-align: center;
 	color:white;
-	font-size: 40px;
+	font-size: 300px;
+	  color: #fff;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
 	font-family: 'Fredoka One', cursive;
-	padding:20px;
-	padding-top: 0px;
-	padding-bottom: 4px;
-	padding-right: 5px;
-	top:0px;
-	right:0px;
-	border-top-right-radius: 0;
-	border-top-left-radius: 0;
-	border-bottom-right-radius: 0;
+	width:100%;
 	z-index: 100;
 }
+.fade {
+   opacity: 1;
+   transition: opacity 1.5s ease-in-out;
+   -moz-transition: opacity 1.5s ease-in-out;
+   -webkit-transition: opacity 1.5s ease-in-out;
+ }
+
+.fade:hover {
+  		opacity: 0.0;
+  }
 
 .chatImg {
 	width:35%;
@@ -174,9 +180,6 @@ input[type=text]:focus {
 	left: 0px;
 	width: 100%;
 	height: 100%;
-	margin-right:auto;
-	margin-left:auto;
-
 }
 #message {
 	margin-top: 10px;
@@ -187,9 +190,9 @@ input[type=text]:focus {
 
 }
 #nickname {
-	position: fixed;
-	width:500px;
-	text-align: center;
-	bottom:20%;
-	left-margin: 20px;
+	z-index: 999;
+	position: absolute;
+	display: block;
+    margin: auto;
+    width: 40%;
 }

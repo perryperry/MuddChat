@@ -15,34 +15,7 @@ $(document).ready(function(){
 	var userNames = [];
 	var curUserNameAutoFill = 0;
 
-	// ###################################################
-	// ###################	EMOJI ########################
-	// ###################################################
-
-	// emoji pics names
-	var EMOJI_COUNT = 83;
-	var TEAMS = 32;
-	var emojiSelected = 'emoji25.png';
-	var isEmojiMenu = false;
-
-	// Build the emoji choices menu
-	var folder = "/pics/emojis/emoji";
-	var i = 1;
-	for(i = 1; i < EMOJI_COUNT + 1; i ++) {
-		if(i == 77) {
-			$("#emojiStart").append("<img src='" + folder + ".gif' class='emoji emojiChoice' />");
-		}
-		var next = i + "";
-		$("#emojiStart").append("<img src='" + folder + next + ".png' class='emoji emojiChoice' />");
-	}
 	
-	
-	for(i = 1; i < TEAMS + 1; i ++) {
-
-		var next = i + "";
-		$("#emojiStart").append("<img src='/pics/football/helmet" + next + ".png' class='emoji emojiChoice' />");
-	}
-	$("#emojiStart").append("<img src='/pics/emojis/helmets.gif' class='emoji emojiChoice' />");
 
 	$("#loginWrapper").css("background", "url('/pics/emojis/helmets.gif')");
 
@@ -69,27 +42,7 @@ $(document).ready(function(){
 						 time + '</div><p>&#09;' + data.msg + '</p></div>');
 		}
 
-		// emoji selection
-		$('#emojiButton').on('click',function(){
-			if(! isEmojiMenu) {
-				$("#emojiSelectionWrapper").show();
-				$("#title").hide();
-				isEmojiMenu = true;
-			} else {
-				$("#emojiSelectionWrapper").hide();
-				$("#title").show();
-				isEmojiMenu = false;
-			}
-		});
-
-		$(document).on('click', '.emojiChoice', function() {
-			var src = $(this).attr("src");
-			// $('#emojiSelectionWrapper').empty();
-			$("#title").show();
-			$("#emojiSelectionWrapper").hide();
-			console.log("Selected emoji: " + src);
-			$('#emojiButton').attr("src", src);
-		});
+		
 
 
 		$('contentWrap').show();
