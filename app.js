@@ -51,11 +51,11 @@ io.on('connection', function(socket) {
 					users[socket.nickname].emit('private-message', {msg: data.msg, emoji: data.emoji, nick: socket.nickname}); 
 					console.log('private message');	
 				} else {
-					callback("Error: private message requires valid @username")
+					callback({ nick: 'admin', emoji:'/pics/emoji/emoji28.png', msg:'> private message requires valid @username'});
 				}
 				
 			} else {
-				callback('Error: include a message');
+				callback({ nick: 'admin', emoji:'/pics/emojis/emoji28.png', msg:'> private message requires valid @username'});
 			}
 		} else {
 			if(! users[socket.nickname]) {
@@ -87,6 +87,63 @@ io.on('connection', function(socket) {
 	function updateNicknames(){
 		io.sockets.emit('usernames', Object.keys(users));
 	}
+
+
+// #############################################################################################################################
+
+
+															//	5 hand 
+
+
+// ##################################################################################################################################
+
+
+// testing card recognition
+socket.on('request-card-game', function(data){
+	socket.deck = new Array();
+	socket.lowCardRemaining = 1;
+	socket.highCardRemaining = 52;
+	var i = 1;
+	for(i = 1; i < 53; i ++) {
+		socket.deck.push(i);
+		
+	}
+	console.log(socket.deck);
+	var cards = dealCards(socket);
+	io.sockets.emit('receive-cards', cards);
+
+});
+
+function dealCards(socket) {
+	var i = 0;
+	var cards = new Array();
+	for(i = 1; i < 6; i ++) {
+
+		cards.push(getRandomCard(53, 1));
+
+		console.log(cards);
+	}
+
+	return cards;
+}
+
+
+// min is inclusive, max is exclusive
+function getRandomCard(min, max) {
+    return (Math.random() * (max - min) + min) >> 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 

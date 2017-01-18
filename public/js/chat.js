@@ -64,7 +64,7 @@ $(document).ready(function(){
 			});
 
 			$nickBox.val('');
-			$("#audioPlayer")[0].play();
+			// $("#audioPlayer")[0].play();
 		});
 
 		// #####################################################################
@@ -72,14 +72,16 @@ $(document).ready(function(){
 		// #####################################################################
 
 		$messageForm.submit(function(e){
-			e.preventDefault();
+			e.preventDefault();		
+
 			// play send music
 			$("#audioPlayer").attr("src", "/audio/send.mp3");
 			$("#audioPlayer")[0].play();
 			var emojiData = $("#emojiButton").attr("src");
 			//if($messageBox.val()) {
 			socket.emit('send-message', {emoji: emojiData, msg: $messageBox.val(), username: username}, function(data) {
-				$chat.append('<span class="error"><b>' + data + "<span><hr>");
+				// error message from server 
+				addChatBubble("talk-bubble round talktext admin", data, "leftside");
 			});
 			$messageBox.val('');
 			//}
@@ -166,7 +168,8 @@ $(document).ready(function(){
 			  var url = $imageURL.val();
 			  console.log("image form submitted: " + url);
 			  socket.emit('paste-image-url', url, function(data) {
-					$chat.append('<span class="error"><b>' + data + "<span><hr>");
+			  		// error message from server 
+					addChatBubble("talk-bubble round talktext admin", data, "leftside");
 			  });
 			  $imageURL.val('');
 			});
@@ -181,7 +184,7 @@ $(document).ready(function(){
 				if(data.nick != username) {
 					$("#audioPlayer").attr("src", "/audio/receive.mp3");
 					$("#audioPlayer")[0].play();
-					addChatBubble("talk-bubble round talktext notprivate", data, "leftside");
+					addChatBubble("talk-bubble round talktext", data, "leftside");
 					// Update the tab's notifications if this tab isn't focused on
 					if(! window.onfocus) {
 					    notifications++;
@@ -238,5 +241,28 @@ $(document).ready(function(){
 				}
 				shiftChatWindow();
 			});
+
+			// #################################################
+			//	Listen for card game events
+			// #################################################
+			socket.on('receive-cards', function(data) {
+				var i = 0;
+				for(i = 0; i < 5; i ++) {
+					var cardURL = getCardURL(data[i]);
+					$chat.append('<img src="' + cardURL + '" id="card' + i + '"" />');
+					// var id = "#card";
+					// id = id + i;
+					// $(id).draggable();
+				}
+			});
+
+			$('#cardsButton').on('click',function(){
+				initCards(socket);
+			});
+
+
+
+
+
 
 		});
