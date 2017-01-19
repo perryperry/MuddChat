@@ -161,14 +161,6 @@ other classes to build upon this*/
 	padding: 10px;
 }
 
-/* Login field */
-#nickname {
-	position: relative;
-	display: block;
-	margin: auto;
-	margin-top: 200px;
-}
-
 .title {
 	display: block;
 	margin: auto;
@@ -219,14 +211,6 @@ input[type=text]:focus {
 	display: inline-block;
 	float:left;
 	margin-right: 10px;
-}
-
-#loginWrapper{
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;
 }
 #message {
 	margin-top: 10px;

@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	var notifications=0;
-	var socket = io.connect();
 	var $imgForm = $('#imgForm');
 	var $nickForm = $('#setNick');
 	var $nickError = $('#nickError');
@@ -10,21 +9,11 @@ $(document).ready(function(){
 	var $messageBox = $('#message');
 	var $chat = $('#chat');
 	var $chatWrap = $('#chatWrap');
-	var $imageURL = $("#imageURL");
 	var username = '';
 	var userNames = [];
 	var curUserNameAutoFill = 0;
 
-
-
 	$("#loginWrapper").css("background", "url('/pics/emojis/helmets.gif')");
-
-		function getTime() {
-			var dt = new Date();
-			var hours = dt.getHours() % 12;
-			var time = hours + ":" + dt.getMinutes();
-			return time;
-		}
 
 		// updates the chat window down to the most recent message
 		function shiftChatWindow() {
@@ -34,16 +23,12 @@ $(document).ready(function(){
 
 		function addChatBubble(css, data, side) {
 			var time = getTime();
-
-			// var emojiMsg = $("#emojiButton").attr("src"); 
 			$chat.append('<div class="username ' + side + '" >' + 
-							data.nick  + 
-						'</div><div class="' + css 
-						+ '"> <img src="' + data.emoji + '" class="emoji emojiChat" /> <div class="time"  style="color:#c9c9c9;">' + 
-						 time + '</div><p>&#09;' + data.msg + '</p></div>');
+			data.nick  + 
+			'</div><div class="' + css 
+			+ '"> <img src="' + data.emoji + '" class="emoji emojiChat" /> <div class="time"  style="color:#c9c9c9;">' + 
+			time + '</div><p>&#09;' + data.msg + '</p></div>');
 		}
-
-		$('contentWrap').show();
 
 		// #####################################################################
 		//							User Name submission
@@ -56,19 +41,23 @@ $(document).ready(function(){
 
 			socket.emit('new user', username, function(data){
 				if(data) {
-					$('#loginWrapper').fadeOut(8700, 'linear');
-					$('#contentWrap').fadeIn(8700, 'linear');
+					$('#loginWrapper').hide();
+					$('#contentWrap').show();
+				//	$('#loginWrapper').fadeOut(100, 'linear');
+				//	$('#contentWrap').fadeIn(100, 'linear');
 				} else {
-					$nickError.html('That username is already taken');
+					$('#setNick').append('<div id="loginError" ><span id="loginErrorBold">ERROR: </span>Username is already taken</div>');
+					$("#loginError").fadeOut(5000, 'linear', function(){
+						 $(this).remove();
+					});
 				}
 			});
-
 			$nickBox.val('');
-			// $("#audioPlayer")[0].play();
+			// $("#audioPlayer")[0].play(); // would play fox nfl theme song
 		});
 
 		// #####################################################################
-		//							Message to Server submission
+		//							Send Message to Server
 		// #####################################################################
 
 		$messageForm.submit(function(e){
@@ -86,6 +75,12 @@ $(document).ready(function(){
 			$messageBox.val('');
 			//}
 		});
+
+
+
+		function checkForImageFile(url) {
+    		return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+		}
 
 			// Helper function
 			// moves the cursor in the text field to a specific focus range
@@ -181,22 +176,30 @@ $(document).ready(function(){
 
 			// receive new public message
 			socket.on('new-message', function(data) {
-				if(data.nick != username) {
-					$("#audioPlayer").attr("src", "/audio/receive.mp3");
-					$("#audioPlayer")[0].play();
-					addChatBubble("talk-bubble round talktext", data, "leftside");
-					// Update the tab's notifications if this tab isn't focused on
-					if(! window.onfocus) {
-					    notifications++;
-					    var title = document.title;
-					    var newTitle = '(' + notifications + ') MuddChat';
-					    document.title = newTitle;
+				if(checkForImageFile(data.msg)) {
+					console.log("Found an image");
+					if(data.nick != username) {
+						$chat.append('<img class="chatImg" src="' + data.msg + '" />');
+					} else {
+						$chat.append('<img class="selfImage" src="' + data.msg + '" />');
 					}
-
 				} else {
-					addChatBubble("talk-bubble round talktext selfMessage", data, "rightside");
+					if(data.nick != username) {
+						$("#audioPlayer").attr("src", "/audio/receive.mp3");
+						$("#audioPlayer")[0].play();
+						addChatBubble("talk-bubble round talktext", data, "leftside");
+						// Update the tab's notifications if this tab isn't focused on
+						if(! window.onfocus) {
+						    notifications++;
+						    var title = document.title;
+						    var newTitle = '(' + notifications + ') MuddChat';
+						    document.title = newTitle;
+						}
+					} else {
+						addChatBubble("talk-bubble round talktext selfMessage", data, "rightside");
+					}
+					shiftChatWindow();
 				}
-				shiftChatWindow();
 			});
 
 			socket.on('usernames', function(data){
@@ -215,8 +218,7 @@ $(document).ready(function(){
 				}
 				$users.html(html);
 			});
-
-			// TODO: privateMsg
+			
 			socket.on('private-message', function(data){
 				if(data.nick != username) {
 					addChatBubble("talk-bubble round talktext privateMsg", data, "leftside");
@@ -229,40 +231,4 @@ $(document).ready(function(){
 				}
 				shiftChatWindow();
 			});
-
-
-
-			// receive a new image from server
-			socket.on('new-image', function(data){
-				if(data.nick != username) {
-					$chat.append('<img class="chatImg" src="' + data.url + '" />');
-				} else {
-					$chat.append('<img class="selfImage" src="' + data.url + '" />');
-				}
-				shiftChatWindow();
-			});
-
-			// #################################################
-			//	Listen for card game events
-			// #################################################
-			socket.on('receive-cards', function(data) {
-				var i = 0;
-				for(i = 0; i < 5; i ++) {
-					var cardURL = getCardURL(data[i]);
-					$chat.append('<img src="' + cardURL + '" id="card' + i + '"" />');
-					// var id = "#card";
-					// id = id + i;
-					// $(id).draggable();
-				}
-			});
-
-			$('#cardsButton').on('click',function(){
-				initCards(socket);
-			});
-
-
-
-
-
-
-		});
+});

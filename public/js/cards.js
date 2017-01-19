@@ -71,3 +71,84 @@ function getCardURL(cardInt) {
 
 	return url;
 }
+
+// **************************************************************
+// ##################### Socket Events ################
+// **************************************************************
+
+$(document).ready(function() {
+
+	$('#cardsButton').on('click',function(){
+		initCards(socket);
+	});
+
+	// #################################################
+	//	Listen for card game events
+	// #################################################
+	
+	socket.on('receive-cards', function(data) {
+		//var i = 0;
+		//for(i = 0; i < 5; i ++) {
+			console.log("Received card: " + data[0]);
+			var cardURL = "/pics/cards/" + data[0] + ".png"; //getCardURL(data[i]);
+			$('#chat').append('<img src="' + cardURL + '" id="card' + i + '"" />');
+			// var id = "#card";
+			// id = id + i;
+			// $(id).draggable();
+		//}
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
+

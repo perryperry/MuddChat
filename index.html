@@ -1,14 +1,14 @@
 <html>
-	
 	<head>
 		<title>MuddChat</title>
 		<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/css/login.css" />
 		<link rel="stylesheet" type="text/css" href="/css/muddchat.css" />
 		<link rel="stylesheet" type="text/css" href="/css/cards.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="/socket.io/socket.io.js" ></script>
-
+		<script src="js/client.js"></script>
 		<script src="js/cards.js"></script>
 		<script src="js/chat.js"></script>
 		<script src="js/emoji.js"></script>
@@ -17,8 +17,8 @@
 		<audio id="audioPlayer" >
   			<source id="mp3Audio" src="/audio/fox.mp3" type="audio/mpeg">
 		</audio>
+		
 		<div id="loginWrapper" >
-			<!-- <span class="title round fade" id="title" >Mudd <br> Chat</span> -->
 			<form id="setNick" >
 				<input id="nickname" type="text" placeholder="Enter a username" />
 				<input type="hidden"></input>
@@ -29,19 +29,12 @@
 			<div id="chatWrap">
 				<div id="chat"></div>
 			</div>
-			
 			<form id="send-message" autocomplete="off" >
 				<input type="text" id="message" name="message" ></input>	
 				<input type="hidden" ></input>
 			</form>
 			<img src="/pics/cards/back2.png" class="emoji button" id="cardsButton" />
-
 			<img src="/pics/emojis/emoji1.png" class="emoji button" id="emojiButton" />
-
-			<form id="imgForm" >
-				<input id="imageURL" type="text" placeholder="Paste an image url" />
-				<input type="hidden" ></input>
-			</form>
 			<div id="users" class="users" ></div>
 			<div id="emojiSelectionWrapper"><div id="emojiStart"></div></div>
 		</div>	

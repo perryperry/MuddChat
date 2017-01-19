@@ -24,6 +24,7 @@ io.on('connection', function(socket) {
 			socket.nickname = data;
 			users[socket.nickname] = socket;
 			updateNicknames();
+			fillDeck(socket);
 		}
 
 	});
@@ -90,25 +91,17 @@ io.on('connection', function(socket) {
 
 
 // #############################################################################################################################
-
-
-															//	5 hand 
-
-
+															//	5 hand card game
 // ##################################################################################################################################
 
 
+// NOTE:
+// Need to not start over the deck each time.
+
 // testing card recognition
 socket.on('request-card-game', function(data){
-	socket.deck = new Array();
-	socket.lowCardRemaining = 1;
-	socket.highCardRemaining = 52;
-	var i = 1;
-	for(i = 1; i < 53; i ++) {
-		socket.deck.push(i);
-		
-	}
-	console.log(socket.deck);
+	
+	// console.log(socket.deck);
 	var cards = dealCards(socket);
 	io.sockets.emit('receive-cards', cards);
 
@@ -117,23 +110,42 @@ socket.on('request-card-game', function(data){
 function dealCards(socket) {
 	var i = 0;
 	var cards = new Array();
-	for(i = 1; i < 6; i ++) {
+	var nextCardIndex = 0;
+	var index = -1;
 
-		cards.push(getRandomCard(53, 1));
+	//for(i = 0; i < 5; i ++) {
+		// search for a random card that is in the deck
+		nextCardIndex = getRandomCard(socket.deck.length, 0);
+		console.log("\nNext Card index: " + nextCardIndex + " and it's card: " +  socket.deck[nextCardIndex] +"\n");
+		// add card to the payload to client
+		cards.push(socket.deck[nextCardIndex]);
+		// remove card from the deck
+		socket.deck.splice(nextCardIndex, 1);
+		console.log("DECK length: " + socket.deck.length + "\n deck: " + socket.deck);
 
-		console.log(cards);
-	}
-
+		if(socket.deck.length == 0) {
+			fillDeck(socket);
+		}
+	//}
+	
 	return cards;
 }
 
 
 // min is inclusive, max is exclusive
 function getRandomCard(min, max) {
-    return (Math.random() * (max - min) + min) >> 0;
+    var nextCard = (Math.random() * (max - min) + min) >> 0;
+    return nextCard;
 }
 
-
+function fillDeck(socket) {
+	// set up deck for card game
+	socket.deck = new Array();
+	var i = 0;
+	for(i = 0; i < 52; i ++) {
+		socket.deck.push(i + 1);
+	}
+}
 
 
 
