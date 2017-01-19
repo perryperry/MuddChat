@@ -9,6 +9,7 @@
 // Card images are named 1.png - 52.png
 
 // 
+var isPlaying = false;
 var cardsSocket;
 
 // static immutable values, the rank of each card value
@@ -26,17 +27,6 @@ var card_count_opp = 0;
 // Current number of hands played 
 var hand_count = 0;
 var hand_count_opp = 0;
-
-function initCards(socket) {
-	$("#cardsButton").attr("src", "/pics/cards/deck.gif");
-	// set the socket
-	cardsSocket = socket;
-	// test cards
-	cardsSocket.emit('request-card-game', $('#message').val(), function(data) {
-		// error message from server 
-		addChatBubble("talk-bubble round talktext admin", data, "leftside");
-	});
-}
 
 // Convert the int representation of card to rank within suit
 function getCardRank(cardInt) {
@@ -61,7 +51,6 @@ function getCardSuitInt(cardInt) {
 	return (cardInt / 14) >> 0;
 }
 
-
 function getCardURL(cardInt) {
 	var url = '/pics/cards/';
 	var rank = getCardRank(cardInt);
@@ -77,9 +66,27 @@ function getCardURL(cardInt) {
 // **************************************************************
 
 $(document).ready(function() {
-
 	$('#cardsButton').on('click',function(){
-		initCards(socket);
+		// Collapse the chatroom display to make room for card table
+		$('#chatWrap').toggleClass("makeRoomForCards");
+		$('#emojiSelectionWrapper').toggleClass("makeRoomForCards");
+
+		if( ! isPlaying ) {
+			isPlaying = true;
+			// Change the cards icon to an active gif
+			$("#cardsButton").attr("src", "/pics/cards/deck.gif");
+			$('#cardTableWrapper').show();
+			console.log("Attempting to send request for a card");
+			// test cards
+			socket.emit('request-card-game', $('#message').val(), function(data) {
+				// error message from server 
+				addChatBubble("talk-bubble round talktext admin", data, "leftside");
+			});
+		} else { // was playing card game
+			$("#cardsButton").attr("src", "/pics/cards/back1.png");
+			$('#cardTableWrapper').hide();
+			isPlaying = false;
+		}
 	});
 
 	// #################################################
@@ -91,61 +98,12 @@ $(document).ready(function() {
 		//for(i = 0; i < 5; i ++) {
 			console.log("Received card: " + data[0]);
 			var cardURL = "/pics/cards/" + data[0] + ".png"; //getCardURL(data[i]);
-			$('#chat').append('<img src="' + cardURL + '" id="card' + i + '"" />');
+			$('#chat').append('<img src="' + cardURL + '" class="card" id="card' + i + '"" draggable="true" ondragstart="drag(event)" />');
 			// var id = "#card";
 			// id = id + i;
 			// $(id).draggable();
 		//}
 	});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
 
 

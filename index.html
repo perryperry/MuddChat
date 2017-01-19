@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>MuddChat</title>
+		<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="/css/login.css" />
@@ -9,9 +10,27 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="/socket.io/socket.io.js" ></script>
 		<script src="js/client.js"></script>
-		<script src="js/cards.js"></script>
 		<script src="js/chat.js"></script>
+		<script src="js/cards.js"></script>
 		<script src="js/emoji.js"></script>
+		<script>
+			
+		function allowDrop(ev) {
+	    	ev.preventDefault();
+		}
+
+		function drag(ev) {
+		    ev.dataTransfer.setData("text", ev.target.id);
+		    console.log(ev.target.id);
+		}
+
+		function drop(ev) {
+	    	ev.preventDefault();
+	    	var data = ev.dataTransfer.getData("text");
+	    	ev.target.appendChild(document.getElementById(data));
+		}
+
+		</script>
 	</head>
 	<body>
 		<audio id="audioPlayer" >
@@ -28,6 +47,31 @@
 		<div id="contentWrap" >
 			<div id="chatWrap">
 				<div id="chat"></div>
+			</div>
+			<div id="cardTableWrapper" class="cardTable" >
+				<table id="cardTable" class="pure-table">
+					<tr>
+					   <th>hand 1</th>
+					   <th>hand 2</th>
+					   <th>hand 3</th>
+					   <th>hand 4</th>
+					   <th>hand 5</th>
+					 </tr>
+					 <tr>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)" ></td>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					 </tr>
+					 <tr>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					  	<td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+					 </tr>
+				</table>
 			</div>
 			<form id="send-message" autocomplete="off" >
 				<input type="text" id="message" name="message" ></input>	

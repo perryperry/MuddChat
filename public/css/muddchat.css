@@ -1,7 +1,8 @@
 /* The error message personality */
 .admin {
-	background-color: black;
+	background-color: black !important;
 	color:#00FF00;
+	opacity: .5 !important;
 }
 
 /*Top level emoji dimension, 
