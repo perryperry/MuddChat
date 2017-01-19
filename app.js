@@ -113,7 +113,7 @@ function dealCards(socket) {
 	var nextCardIndex = 0;
 	var index = -1;
 
-	//for(i = 0; i < 5; i ++) {
+	for(i = 0; i < 5; i ++) {
 		// search for a random card that is in the deck
 		nextCardIndex = getRandomCard(socket.deck.length, 0);
 		console.log("\nNext Card index: " + nextCardIndex + " and it's card: " +  socket.deck[nextCardIndex] +"\n");
@@ -123,10 +123,10 @@ function dealCards(socket) {
 		socket.deck.splice(nextCardIndex, 1);
 		console.log("DECK length: " + socket.deck.length + "\n deck: " + socket.deck);
 
-		if(socket.deck.length == 0) {
+		if(socket.deck.length < 1) {
 			fillDeck(socket);
 		}
-	//}
+	}
 	
 	return cards;
 }

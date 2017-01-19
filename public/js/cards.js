@@ -62,31 +62,33 @@ function getCardURL(cardInt) {
 }
 
 // **************************************************************
-// ##################### Socket Events ################
+// ##################### Socket Events ##########################
 // **************************************************************
 
 $(document).ready(function() {
 	$('#cardsButton').on('click',function(){
 		// Collapse the chatroom display to make room for card table
-		$('#chatWrap').toggleClass("makeRoomForCards");
-		$('#emojiSelectionWrapper').toggleClass("makeRoomForCards");
-
-		if( ! isPlaying ) {
+		isPlaying = true;
+		if( isPlaying ) {
 			isPlaying = true;
-			// Change the cards icon to an active gif
-			$("#cardsButton").attr("src", "/pics/cards/deck.gif");
-			$('#cardTableWrapper').show();
-			console.log("Attempting to send request for a card");
-			// test cards
-			socket.emit('request-card-game', $('#message').val(), function(data) {
-				// error message from server 
-				addChatBubble("talk-bubble round talktext admin", data, "leftside");
-			});
-		} else { // was playing card game
-			$("#cardsButton").attr("src", "/pics/cards/back1.png");
-			$('#cardTableWrapper').hide();
-			isPlaying = false;
-		}
+			$('#chatWrap').addClass("makeRoomForCards");
+			$('#emojiSelectionWrapper').addClass("makeRoomForCards");
+		} //else { // was playing card game
+		// 	$("#cardsButton").attr("src", "/pics/cards/back1.png");
+		// 	$('#cardTableWrapper').hide();
+		// 	isPlaying = false;
+		// }
+	
+		// Change the cards icon to an active gif
+		$("#cardsButton").attr("src", "/pics/cards/deck.gif");
+		$('#cardTableWrapper').show();
+		console.log("Attempting to send request for a card");
+		// test cards
+		socket.emit('request-card-game', $('#message').val(), function(data) {
+			// error message from server 
+			addChatBubble("talk-bubble round talktext admin", data, "leftside");
+		});
+		
 	});
 
 	// #################################################
@@ -94,15 +96,12 @@ $(document).ready(function() {
 	// #################################################
 	
 	socket.on('receive-cards', function(data) {
-		//var i = 0;
-		//for(i = 0; i < 5; i ++) {
-			console.log("Received card: " + data[0]);
-			var cardURL = "/pics/cards/" + data[0] + ".png"; //getCardURL(data[i]);
-			$('#chat').append('<img src="' + cardURL + '" class="card" id="card' + i + '"" draggable="true" ondragstart="drag(event)" />');
-			// var id = "#card";
-			// id = id + i;
-			// $(id).draggable();
-		//}
+		var i = 0;
+		for(i = 0; i < 5; i ++) {
+			console.log("Received card: " + data[i]);
+			var cardURL = "/pics/cards/" + data[i] + ".png"; //getCardURL(data[i]);
+			$('#cards').append('<img src="' + cardURL + '" class="card" id="card' + i + '"" draggable="true" ondragstart="drag(event)" />');
+		}
 	});
 });
 

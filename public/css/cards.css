@@ -4,6 +4,12 @@
 .card {
 	position:relative;
 	width:100px;
+	float:left;
+}
+.cards {
+	position: relative;
+	display: block;
+	margin: auto;
 }
 
 .cardIcon {
@@ -24,7 +30,8 @@
 	border-style: solid;
 	border-width: 25px;
 	border-radius: 25px;
-	background-color: #00cc99;
+	/*background-color: #00cc99;*/
+	background-image: url('/pics/plaid.gif');
 	border-color: #c68c53;
 	width:90%;
 	height:50%;
