@@ -80,13 +80,11 @@
 }
 
 #cardTable {
-	position: absolute;
-	display: block;
-	margin:auto;
 	width:100%;
 	height:100%;
 }
-#cardTable:first-child {
+
+th {
 	height:20px;
 }
 #cardTable tr {
