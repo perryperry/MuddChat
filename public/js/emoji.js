@@ -28,8 +28,8 @@ $(document).ready(function(){
 
 	// emoji selection
 	$('#emojiButton').on('click',function(){
-		$("#chatWrap" ).removeClass( "makeRoomForCards" );
-		$("#emojiSelectionWrapper" ).removeClass( "makeRoomForCards" );
+	//	$("#chatWrap" ).removeClass( "makeRoomForCards" );
+	//	$("#emojiSelectionWrapper" ).removeClass( "makeRoomForCards" );
 		$("#cardTableWrapper").hide();
 		if(! isEmojiMenu) {
 			$("#emojiSelectionWrapper").show();

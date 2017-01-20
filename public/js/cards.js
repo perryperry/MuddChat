@@ -6,8 +6,14 @@
 // Logic of game is controlled by clients, 
 // server only communicates each card played to other client.
 // Cards are represented by a number 1 - 52.
-// Card images are named 1.png - 52.png
+// Card images are named 1.png - 52.png.
 
+// Implementation:
+// The cards are dealt 5 at a time, 
+// user is allowed to have one card selected at a time,
+// then the hand columns of the table are focused on to 
+// select for card placement
+// TODO: Draggable UI instead
 // 
 var isPlaying = false;
 var cardsSocket;
@@ -27,6 +33,12 @@ var card_count_opp = 0;
 // Current number of hands played 
 var hand_count = 0;
 var hand_count_opp = 0;
+
+// current card focused on
+var cur_card = 0;
+var cur_column = 0;
+
+
 
 // Convert the int representation of card to rank within suit
 function getCardRank(cardInt) {
@@ -71,8 +83,8 @@ $(document).ready(function() {
 		isPlaying = true;
 		if( isPlaying ) {
 			isPlaying = true;
-			$('#chatWrap').addClass("makeRoomForCards");
-			$('#emojiSelectionWrapper').addClass("makeRoomForCards");
+		//	$('#chatWrap').addClass("makeRoomForCards");
+		//	$('#emojiSelectionWrapper').addClass("makeRoomForCards");
 		} //else { // was playing card game
 		// 	$("#cardsButton").attr("src", "/pics/cards/back1.png");
 		// 	$('#cardTableWrapper').hide();
@@ -97,10 +109,14 @@ $(document).ready(function() {
 	
 	socket.on('receive-cards', function(data) {
 		var i = 0;
+		var next='';
 		for(i = 0; i < 5; i ++) {
 			console.log("Received card: " + data[i]);
 			var cardURL = "/pics/cards/" + data[i] + ".png"; //getCardURL(data[i]);
-			$('#cards').append('<img src="' + cardURL + '" class="card" id="card' + i + '"" draggable="true" ondragstart="drag(event)" />');
+			next ='#card' + (i + 1);
+			console.log(next);
+			$(next).attr('src', cardURL);
+			//$('#cardsVs').append('<img src="/pics/cards/back1.png" class="card draggable opponent" id="card' + i + '"" draggable="true" ondragstart="drag(event)" />');
 		}
 	});
 });

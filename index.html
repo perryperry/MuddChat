@@ -15,20 +15,20 @@
 		<script src="js/emoji.js"></script>
 		<script>
 			
-		function allowDrop(ev) {
-	    	ev.preventDefault();
-		}
+		// function allowDrop(ev) {
+	 //    	ev.preventDefault();
+		// }
 
-		function drag(ev) {
-		    ev.dataTransfer.setData("text", ev.target.id);
-		    console.log(ev.target.id);
-		}
+		// function drag(ev) {
+		//     ev.dataTransfer.setData("text", ev.target.id);
+		//     console.log(ev.target.id);
+		// }
 
-		function drop(ev) {
-	    	ev.preventDefault();
-	    	var data = ev.dataTransfer.getData("text");
-	    	ev.target.appendChild(document.getElementById(data));
-		}
+		// function drop(ev) {
+	 //    	ev.preventDefault();
+	 //    	var data = ev.dataTransfer.getData("text");
+	 //    	ev.target.appendChild(document.getElementById(data));
+		// }
 
 		</script>
 	</head>
@@ -48,31 +48,37 @@
 			<div id="chatWrap">
 				<div id="chat"></div>
 			</div>
-			<div id="cardTableWrapper" class="cardTable" >
-				<table id="cardTable" class="pure-table">
-					<tr>
-					   <th>hand 1</th>
-					   <th>hand 2</th>
-					   <th>hand 3</th>
-					   <th>hand 4</th>
-					   <th>hand 5</th>
-					 </tr>
-					 <tr>
-					   <td  ></td>
-					   <td ></td>
-					   <td ></td>
-					   <td ></td>
-					   <td ></td>
-					 </tr>
-					 <tr>
-					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
-					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
-					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
-					   <td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
-					  	<td ondrop="drop(event)" ondragover="allowDrop(event)"></td>
-					 </tr>
-				</table>
-			</div>d
+				<div id="cardTableWrapper" class="cardTable" >
+					<img class="card cardVs" id="card1Vs" />
+					<img class="card cardVs" id="card2Vs" />
+					<img class="card cardVs" id="card3Vs" />
+					<img class="card cardVs" id="card4Vs" />
+					<img class="card cardVs" id="card5Vs" />
+					<table id="cardTable" >
+						<tr>
+						   <th>hand 1</th>
+						   <th>hand 2</th>
+						   <th>hand 3</th>
+						   <th>hand 4</th>
+						   <th>hand 5</th>
+						 </tr>
+						 <tr>
+						   <td class="cardHands cardHandVs" ></td>
+						   <td class="cardHands cardHandVs" ></td>
+						   <td class="cardHands cardHandVs" ></td>
+						   <td class="cardHands cardHandVs" ></td>
+						   <td class="cardHands cardHandVs" ></td>
+						 </tr>
+						 <tr>
+						 	<td class="cardHands" ></td>
+							<td class="cardHands" ></td>
+							<td class="cardHands" ></td>
+							<td class="cardHands" ></td>
+							<td class="cardHands" ></td>
+						 </tr>
+					</table>
+				</div>
+
 			<form id="send-message" autocomplete="off" >
 				<input type="text" id="message" name="message" ></input>	
 				<input type="hidden" ></input>
@@ -81,7 +87,13 @@
 			<img src="/pics/emojis/emoji1.png" class="emoji button" id="emojiButton" />
 			<div id="users" class="users" ></div>
 			<div id="emojiSelectionWrapper"><div id="emojiStart"></div></div>
-			<div id="cards" class="cards" ></div>
+			<div id="cards" class="cards" >
+				<img class="card" id="card1" />
+				<img class="card" id="card2" />
+				<img class="card" id="card3" />
+				<img class="card" id="card4" />
+				<img class="card" id="card5" />
+			</div>
 		</div>	
 		
 	</body>
