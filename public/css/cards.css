@@ -12,6 +12,7 @@
 	padding-left: 5%;
 }
 
+/* Own cards in a hand */
 .cardPlayed1 {
 	bottom:20%;
 }
@@ -26,6 +27,23 @@
 }
 .cardPlayed5 {
 	bottom:0%;
+}
+
+/* Opponents cards in a hand */
+.cardPlayedVs1 {
+	top:25%;
+}
+.cardPlayedVs2 {
+	top:20%;
+}
+.cardPlayedVs3 {
+	top:15%;
+}
+.cardPlayedVs4 {
+	top:10%;
+}
+.cardPlayedVs5 {
+	top:5%;
 }
 
 .card {

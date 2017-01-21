@@ -46,6 +46,11 @@ var hand3 = [];
 var hand4 = [];
 var hand5 = [];
 
+var hand1VsLength = 0;
+var hand2VsLength = 0;
+var hand3VsLength = 0;
+var hand4VsLength = 0;
+var hand5VsLength = 0;
 
 // Convert the int representation of card to rank within suit
 function getCardRank(cardInt) {
@@ -88,18 +93,39 @@ function getCardInt(cardURL) {
 	return parseInt(cardURL, 10);
 }
 
-function addCardToHand(cardURL, hand) {
+function addCardToHand(cardURL, hand, handObject) {
 	console.log("Adding " + cardURL + " to " + hand);
 	if(hand.length < 5) {
 		var cardValue = getCardInt(cardURL);
 		card_count ++;
 		hand.push(cardValue);
 		$("img[src$='" + cardURL + "']").hide();
+		if(hand.length < 4) {
+			handObject.append("<img class='playedCard cardPlayed" + hand.length + "' src='" + cardURL + "' />");
+		} else {
+			handObject.append("<img class='playedCard cardPlayed" + hand.length + "' src='/pics/cards/back2.png' />");
+		}
 		return true;
 	}
 	return false;
 }
 
+function addOpponentCardToHand(cardURL, handLength, handObject) {
+	//console.log("Adding " + cardURL + " to " + hand);
+	if(handLength <= 5) {
+		var cardValue = getCardInt(cardURL);
+		card_count_opp ++;
+		// hand.push(cardValue);
+		// $("img[src$='" + cardURL + "']").hide();
+		if(handLength < 4) {
+			handObject.append("<img class='playedCard cardPlayedVs" + handLength + "' src='" + cardURL + "' />");
+		} else {
+			handObject.append("<img class='playedCard cardPlayedVs" + handLength + "' src='/pics/cards/back1.png' />");
+		}
+		return true;
+	}
+	return false;
+}
 
 // **************************************************************
 // ##################### Socket Events ##########################
@@ -134,6 +160,50 @@ $(document).ready(function() {
 		 }
 	});
 
+	// #################################################
+	//	Listen for card game events
+	// #################################################
+	
+	// Receive the 5 card deal from the server for next iteration of game play
+	socket.on('receive-cards', function(data) {
+		var i = 0;
+		var next='';
+		for(i = 0; i < 5; i ++) {
+			console.log("Received card: " + data[i]);
+			var cardURL = "/pics/cards/" + data[i] + ".png"; //getCardURL(data[i]);
+			next ='#card' + (i + 1);
+			console.log(next);
+			$(next).attr('src', cardURL);
+			$(next).toggleClass("cardSelected", false); // make sure none of the cards are selected from previous round
+			$(next).show();
+			//$('#cardsVs').append('<img src="/pics/cards/back1.png" class="card draggable opponent" id="card' + i + '"" draggable="true" ondragstart="drag(event)" />');
+		}
+	});
+
+	// Receive opponent's card played on the table
+	socket.on('receive-opponent-card-played', function(data) {
+		console.log("Received " + data.card + " to play on opponent's " + data.hand);
+		// addOpponentCardToHand(cardURL, hand, handObject);
+		var hand = data.hand;
+		var card = data.card;
+		if(hand == "hand1") {
+			hand1VsLength ++;
+			addOpponentCardToHand(card, hand1VsLength, $("#hand1Vs")); 
+		} else if (hand == "hand2") {
+			hand2VsLength ++;
+			addOpponentCardToHand(card, hand2VsLength, $("#hand2Vs"));
+		} else if (hand == "hand3") {
+			hand3VsLength ++;
+			addOpponentCardToHand(card, hand3VsLength, $("#hand3Vs"));
+		} else if (hand == "hand4") {
+			hand4VsLength ++;
+			addOpponentCardToHand(card, hand4VsLength, $("#hand4Vs"));
+		} else if (hand == "hand5") {
+			hand5VsLength ++;
+			addOpponentCardToHand(card, hand5VsLength, $("#hand5Vs"));
+		}
+	});
+
 	// ################################################
 	// Listen for game click events
 	// ################################################
@@ -153,70 +223,22 @@ $(document).ready(function() {
 		var hand = $(this).attr("id");
 		if(selectedCard != "") {
 			if(hand == "hand1") {
-				if(addCardToHand(selectedCard, hand1)) {
-					if(hand1.length < 4) {
-						$(this).append("<img class='playedCard cardPlayed" + hand1.length + "' src='" + selectedCard + "' />");
-					} else {
-						$(this).append("<img class='playedCard cardPlayed" + hand1.length + "' src='/pics/cards/back2.png' />");
-					}
-					console.log("After adding card to hand1: " + hand1);
-				}
+				addCardToHand(selectedCard, hand1, $(this)); 
 			} else if (hand == "hand2") {
-				if(addCardToHand(selectedCard, hand2)) {
-					if(hand2.length < 4) {
-						$(this).append("<img class='playedCard cardPlayed" + hand2.length + "' src='" + selectedCard + "' />");
-					} else {
-						$(this).append("<img class='playedCard cardPlayed" + hand2.length + "' src='/pics/cards/back2.png' />");
-					}
-					console.log("After adding card to hand2: " + hand2);
-				}
+				addCardToHand(selectedCard, hand2, $(this));
 			} else if (hand == "hand3") {
-				if(addCardToHand(selectedCard, hand3)) {
-					if(hand3.length < 4) {
-						$(this).append("<img class='playedCard cardPlayed" + hand3.length + "' src='" + selectedCard + "' />");
-					} else {
-						$(this).append("<img class='playedCard cardPlayed" + hand3.length + "' src='/pics/cards/back2.png' />");
-					}
-					console.log("After adding card to hand3: " + hand3);
-				}
+				addCardToHand(selectedCard, hand3, $(this));
 			} else if (hand == "hand4") {
-				if(addCardToHand(selectedCard, hand4)) {
-					if(hand4.length < 4) {
-						$(this).append("<img class='playedCard cardPlayed" + hand4.length + "' src='" + selectedCard + "' />");
-					} else {
-						$(this).append("<img class='playedCard cardPlayed" + hand4.length + "' src='/pics/cards/back2.png' />");
-					}
-					console.log("After adding card to hand4: " + hand4);
-				}
+				addCardToHand(selectedCard, hand4, $(this));
 			} else if (hand == "hand5") {
-				if(addCardToHand(selectedCard, hand5)) {
-					if(hand5.length < 4) {
-						$(this).append("<img class='playedCard cardPlayed" + hand5.length + "' src='" + selectedCard + "' />");
-					} else {
-						$(this).append("<img class='playedCard cardPlayed" + hand5.length + "' src='/pics/cards/back2.png' />");
-					}
-					console.log("After adding card to hand5: " + hand5);
-				}
+				addCardToHand(selectedCard, hand5, $(this));
 			}
-			selectedCard = "";
-		}
-	});
-
-	// #################################################
-	//	Listen for card game events
-	// #################################################
-	
-	socket.on('receive-cards', function(data) {
-		var i = 0;
-		var next='';
-		for(i = 0; i < 5; i ++) {
-			console.log("Received card: " + data[i]);
-			var cardURL = "/pics/cards/" + data[i] + ".png"; //getCardURL(data[i]);
-			next ='#card' + (i + 1);
-			console.log(next);
-			$(next).attr('src', cardURL);
-			$(next).show();
-			//$('#cardsVs').append('<img src="/pics/cards/back1.png" class="card draggable opponent" id="card' + i + '"" draggable="true" ondragstart="drag(event)" />');
+			// Send the server the move played
+			socket.emit('send-card-played', {hand: hand, card: selectedCard}, function(data) {
+				// error message from server 
+				addChatBubble("talk-bubble round talktext admin", data, "leftside");
+			});
+			selectedCard = ""; // reset the selectedCard
 		}
 	});
 });

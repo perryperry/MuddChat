@@ -101,13 +101,43 @@ io.on('connection', function(socket) {
 // Need to not start over the deck each time.
 
 // testing card recognition
-socket.on('request-card-game', function(data){
-	
-	// console.log(socket.deck);
-	var cards = dealCards(socket);
-	io.sockets.emit('receive-cards', cards);
-
+socket.on('request-card-game', function(data) {
+	console.log(socket.nickname + " requesting a poker game against " + data);
+	if(! socket.isPlaying) {
+		if(users[data]) {
+			console.log("Opponent " + data + " found, starting game...");
+			socket.opponent = data;
+			socket.isPlaying = true;
+			users[socket.opponent].isPlaying = true;
+			users[socket.opponent].opponent = socket.nickname;
+			var cards = dealCards(socket);
+			var cardsVs = dealCards(socket);
+			users[socket.nickname].emit('receive-cards', cards);
+			users[socket.opponent].emit('receive-cards', cardsVs);
+		} else {
+			console.log("Opponent not found");
+			//users[socket.nickname].emit('opponent-not-found', {msg: data.msg, emoji: data.emoji, nick: socket.nickname});
+		}
+	}
 });
+
+socket.on('send-card-played', function(data) { 
+	console.log("**** POKER DEBUG ****\n" + socket.nickname + " played " + data.card + " on hand " + data.hand);
+	// TODO:
+	// store the played card and which hand
+
+
+
+
+
+
+
+
+
+	// send opponent the played card and hand
+	users[socket.opponent].emit('receive-opponent-card-played', data);
+});
+
 
 function dealCards(socket) {
 	var i = 0;
@@ -123,7 +153,7 @@ function dealCards(socket) {
 		cards.push(socket.deck[nextCardIndex]);
 		// remove card from the deck
 		socket.deck.splice(nextCardIndex, 1);
-		console.log("DECK length: " + socket.deck.length + "\n deck: " + socket.deck);
+		//console.log("DECK length: " + socket.deck.length + "\n deck: " + socket.deck);
 
 		if(socket.deck.length < 1) {
 			fillDeck(socket);
