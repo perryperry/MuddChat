@@ -101,7 +101,7 @@
 }
 
 .cardTable {
-	position: fixed;
+	display: inline-block;
 	left:0;
 	right:0;
 	top:25px;
@@ -115,7 +115,7 @@
 	/*background-image: url('/pics/plaid.gif');*/
 	border-color: #c68c53;
 	width:90%;
-	height:70%;
+	height:65%;
 	display: none;
 	opacity: .4;
 	z-index:990;

@@ -30,7 +30,7 @@ $(document).ready(function(){
 	$('#emojiButton').on('click',function(){
 	//	$("#chatWrap" ).removeClass( "makeRoomForCards" );
 	//	$("#emojiSelectionWrapper" ).removeClass( "makeRoomForCards" );
-		$("#cardTableWrapper").hide();
+		//$("#cardTableWrapper").hide();
 		if(! isEmojiMenu) {
 			$("#emojiSelectionWrapper").show();
 			

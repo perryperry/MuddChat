@@ -27,6 +27,8 @@ io.on('connection', function(socket) {
 			users[socket.nickname] = socket;
 			updateNicknames();
 			fillDeck(socket);
+			socket.cardCount = 0;
+			socket.isPlaying = false;
 		}
 
 	});
@@ -87,7 +89,7 @@ io.on('connection', function(socket) {
 		updateNicknames();
 	});
 
-	function updateNicknames(){
+	function updateNicknames() {
 		io.sockets.emit('usernames', Object.keys(users));
 	}
 
@@ -100,69 +102,96 @@ io.on('connection', function(socket) {
 // NOTE:
 // Need to not start over the deck each time.
 
-// testing card recognition
+// Start the card game
 socket.on('request-card-game', function(data) {
+	
 	console.log(socket.nickname + " requesting a poker game against " + data);
-	if(! socket.isPlaying) {
-		if(users[data]) {
-			console.log("Opponent " + data + " found, starting game...");
-			socket.opponent = data;
+	if(users[data]) {
+		console.log("Found socket for " + data);
+		if(! socket.isPlaying && ! users[data].isPlaying) {
+			console.log("Neither player is in a game, starting new game...");
+			// init this player
+			socket.cardCount = 0;
 			socket.isPlaying = true;
+			socket.opponent = data;
+			socket.host = true; // for keeping track of which deck to use.
+			// init the opponent
+			users[socket.opponent].host = false;
+			users[socket.opponent].cardCount = 0;
 			users[socket.opponent].isPlaying = true;
 			users[socket.opponent].opponent = socket.nickname;
-			var cards = dealCards(socket);
-			var cardsVs = dealCards(socket);
-			users[socket.nickname].emit('receive-cards', cards);
-			users[socket.opponent].emit('receive-cards', cardsVs);
-		} else {
-			console.log("Opponent not found");
-			//users[socket.nickname].emit('opponent-not-found', {msg: data.msg, emoji: data.emoji, nick: socket.nickname});
+			fillDeck(socket);
+			// start the game
+			nextRound(socket);
 		}
+	} else {
+		console.log("Opponent not found");
+		users[socket.nickname].emit('opponent-not-found', "Opponent not found");
 	}
 });
-
+// receive the client's send card to a hand event
 socket.on('send-card-played', function(data) { 
 	console.log("**** POKER DEBUG ****\n" + socket.nickname + " played " + data.card + " on hand " + data.hand);
 	// TODO:
 	// store the played card and which hand
-
-
-
-
-
-
-
-
-
 	// send opponent the played card and hand
 	users[socket.opponent].emit('receive-opponent-card-played', data);
+	socket.cardCount ++;
+	if(socket.cardCount % 5 == 0 && users[socket.opponent].cardCount == socket.cardCount) {
+		if(socket.host) {
+			nextRound(socket);
+		} else {
+			nextRound(users[socket.opponent]);
+		}
+	}
 });
 
+
+socket.on('quit-card-game', function(data) { 
+	console.log("ending game...");
+	endGame(socket);
+});
+
+
+function nextRound(socket) {
+	//console.log("Deck: "  +  socket.deck.length);
+
+	if(socket.cardCount >= 25) {
+		endGame(socket);
+	} else {
+		var cards = dealCards(socket);
+		var cardsVs = dealCards(socket);
+		if(socket.opponent) {
+			users[socket.opponent].emit('receive-cards', cardsVs);
+		}
+		users[socket.nickname].emit('receive-cards', cards);
+	}
+}
 
 function dealCards(socket) {
 	var i = 0;
 	var cards = new Array();
-	var nextCardIndex = 0;
 	var index = -1;
-
 	for(i = 0; i < 5; i ++) {
-		// search for a random card that is in the deck
-		nextCardIndex = getRandomCard(socket.deck.length, 0);
-		console.log("\nNext Card index: " + nextCardIndex + " and it's card: " +  socket.deck[nextCardIndex] +"\n");
-		// add card to the payload to client
-		cards.push(socket.deck[nextCardIndex]);
-		// remove card from the deck
-		socket.deck.splice(nextCardIndex, 1);
-		//console.log("DECK length: " + socket.deck.length + "\n deck: " + socket.deck);
-
-		if(socket.deck.length < 1) {
-			fillDeck(socket);
-		}
+		drawCard(socket, cards);
+		console.log("DECK length: " + socket.deck.length + "\n deck: " + socket.deck);
 	}
-	
+	if(socket.deck.length <= 2) {
+		drawCard(socket, cards);
+	}
 	return cards;
 }
 
+function drawCard(socket, cards) {
+	var nextCardIndex = 0;
+	// search for a random card that is in the deck
+	nextCardIndex = getRandomCard(socket.deck.length, 0);
+	console.log("\nNext Card index: " + nextCardIndex + " and it's card: " +  socket.deck[nextCardIndex] +"\n");
+	// add card to the payload to client
+	cards.push(socket.deck[nextCardIndex]);
+	// remove card from the deck
+	socket.deck.splice(nextCardIndex, 1);
+}
 
 // min is inclusive, max is exclusive
 function getRandomCard(min, max) {
@@ -179,33 +208,20 @@ function fillDeck(socket) {
 	}
 }
 
-
-
-
-
-
-
-
-
+// Reset both players for next future game
+function endGame(socket) {
+	if(socket.opponent) {
+		users[socket.opponent].emit('game-over', "game over");
+		fillDeck(users[socket.opponent]);
+		users[socket.opponent].cardCount = 0;
+		users[socket.opponent].isPlaying = false;
+		users[socket.opponent].opponent = "";
+	}
+	users[socket.nickname].emit('game-over', "game over");
+	fillDeck(socket);
+	socket.cardCount = 0;
+	socket.isPlaying = false;
+	socket.opponent = "";
+}
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var http = require('http');
-// http.createServer(function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/plain'});
-//   res.end('Hello World\n');
-// }).listen(8124, "127.0.0.1");
-// console.log('Server running at http://127.0.0.1:8124/');

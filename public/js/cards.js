@@ -34,10 +34,6 @@ var card_count_opp = 0;
 var hand_count = 0;
 var hand_count_opp = 0;
 
-// current card focused on
-var cur_card = 0;
-var cur_column = 0;
-
 var selectedCard = 0;
 
 var hand1 = [];
@@ -51,6 +47,23 @@ var hand2VsLength = 0;
 var hand3VsLength = 0;
 var hand4VsLength = 0;
 var hand5VsLength = 0;
+
+function showTable() {
+	$('#chatWrap').addClass("makeRoomForCards");
+	$('#emojiSelectionWrapper').addClass("makeRoomForCards");
+	// Change the cards icon to an active gif
+	$("#cardsButton").attr("src", "/pics/cards/deck.gif");
+	$('#cardTableWrapper').show();
+	$("#cards").show();
+}
+
+function hideTable() {
+	$('#emojiSelectionWrapper').toggleClass("makeRoomForCards", false);
+	$('#chatWrap').toggleClass("makeRoomForCards", false);
+	$("#cardsButton").attr("src", "/pics/cards/back1.png");
+ 	$('#cardTableWrapper').hide();
+ 	$("#cards").hide();
+}
 
 // Convert the int representation of card to rank within suit
 function getCardRank(cardInt) {
@@ -136,28 +149,17 @@ $(document).ready(function() {
 	$('#cardsButton').on('click',function(){
 		// Collapse the chatroom display to make room for card table
 		if(! isPlaying ) {
-			isPlaying = true;
-			//$('#chatWrap').addClass("makeRoomForCards");
-			//$('#emojiSelectionWrapper').addClass("makeRoomForCards");
-			// Change the cards icon to an active gif
-			$("#cardsButton").attr("src", "/pics/cards/deck.gif");
-			$('#cardTableWrapper').show();
 			// request game from server
 			socket.emit('request-card-game', $('#message').val(), function(data) {
 				// error message from server 
 				addChatBubble("talk-bubble round talktext admin", data, "leftside");
 			});
-		} else { // was playing card game
-			// notify server that you are quiting
+		} else {
 			socket.emit('quit-card-game', $('#message').val(), function(data) {
 				// error message from server 
 				addChatBubble("talk-bubble round talktext admin", data, "leftside");
 			});
-			//$('#emojiSelectionWrapper').toggleClass("makeRoomForCards", false);
-			//$("#cardsButton").attr("src", "/pics/cards/back1.png");
-		 	$('#cardTableWrapper').hide();
-		 	isPlaying = false;
-		 }
+		}
 	});
 
 	// #################################################
@@ -166,9 +168,12 @@ $(document).ready(function() {
 	
 	// Receive the 5 card deal from the server for next iteration of game play
 	socket.on('receive-cards', function(data) {
+		isPlaying = true;
+		showTable();
 		var i = 0;
 		var next='';
-		for(i = 0; i < 5; i ++) {
+		var num = (card_count == 20) ? 6 : 5;
+		for(i = 0; i < num; i ++) {
 			console.log("Received card: " + data[i]);
 			var cardURL = "/pics/cards/" + data[i] + ".png"; //getCardURL(data[i]);
 			next ='#card' + (i + 1);
@@ -178,6 +183,7 @@ $(document).ready(function() {
 			$(next).show();
 			//$('#cardsVs').append('<img src="/pics/cards/back1.png" class="card draggable opponent" id="card' + i + '"" draggable="true" ondragstart="drag(event)" />');
 		}
+
 	});
 
 	// Receive opponent's card played on the table
@@ -202,6 +208,45 @@ $(document).ready(function() {
 			hand5VsLength ++;
 			addOpponentCardToHand(card, hand5VsLength, $("#hand5Vs"));
 		}
+	});
+
+	socket.on('opponent-not-found', function(data){
+		alert("Opponent not in the room!");
+	});
+
+	socket.on('game-over', function(data) {
+		$("#cardsButton").attr("src", "/pics/cards/back2.png");
+		isPlaying = false;
+		remaining_cards = 52;
+		// Current number of cards laid on the table this hand
+		card_count = 0;
+		card_count_opp = 0;
+		
+		hand1 = [];
+		hand2 = [];
+		hand3 = [];
+		hand4 = [];
+		hand5 = [];
+
+		hand1VsLength = 0;
+		hand2VsLength = 0;
+		hand3VsLength = 0;
+		hand4VsLength = 0; 
+		hand5VsLength = 0;
+
+		alert(data);
+
+		$("#hand1").html("");
+		$("#hand2").html("");
+		$("#hand3").html("");
+		$("#hand4").html("");
+		$("#hand5").html("");
+		$("#hand1Vs").html("");
+		$("#hand2Vs").html("");
+		$("#hand3Vs").html("");
+		$("#hand4Vs").html("");
+		$("#hand5Vs").html("");
+		hideTable();
 	});
 
 	// ################################################
