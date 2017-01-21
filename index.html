@@ -13,24 +13,6 @@
 		<script src="js/chat.js"></script>
 		<script src="js/cards.js"></script>
 		<script src="js/emoji.js"></script>
-		<script>
-			
-		// function allowDrop(ev) {
-	 //    	ev.preventDefault();
-		// }
-
-		// function drag(ev) {
-		//     ev.dataTransfer.setData("text", ev.target.id);
-		//     console.log(ev.target.id);
-		// }
-
-		// function drop(ev) {
-	 //    	ev.preventDefault();
-	 //    	var data = ev.dataTransfer.getData("text");
-	 //    	ev.target.appendChild(document.getElementById(data));
-		// }
-
-		</script>
 	</head>
 	<body>
 		<audio id="audioPlayer" >
@@ -70,11 +52,11 @@
 						   <td class="cardHands cardHandVs" ></td>
 						 </tr>
 						 <tr>
-						 	<td class="cardHands" ></td>
-							<td class="cardHands" ></td>
-							<td class="cardHands" ></td>
-							<td class="cardHands" ></td>
-							<td class="cardHands" ></td>
+						 	<td class="hand cardHands" id="hand1" align="center" ></td>
+							<td class="hand cardHands" id="hand2" align="center" ></td>
+							<td class="hand cardHands" id="hand3" align="center" ></td>
+							<td class="hand cardHands" id="hand4" align="center" ></td>
+							<td class="hand cardHands" id="hand5" align="center" ></td>
 						 </tr>
 					</table>
 				</div>

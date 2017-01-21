@@ -49,7 +49,7 @@ other classes to build upon this*/
 	background-color: white;
 	border-bottom-right-radius: 10px;
 	overflow: scroll;
-	z-index: 200;
+	z-index: 995;
 	padding-left:5px;
 	padding-right:5px;
 }

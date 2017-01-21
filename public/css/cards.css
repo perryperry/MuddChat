@@ -4,10 +4,33 @@
 	opacity: 1;
 }
 
+.playedCard {
+	position: absolute;
+	display: block;
+	margin: auto;
+	width:8%;
+	padding-left: 5%;
+}
+
+.cardPlayed1 {
+	bottom:20%;
+}
+.cardPlayed2 {
+	bottom:15%;
+}
+.cardPlayed3 {
+	bottom:10%;
+}
+.cardPlayed4 {
+	bottom:5%;
+}
+.cardPlayed5 {
+	bottom:0%;
+}
 
 .card {
 	position:relative;
-	width:11%;
+	width:20%;
 	float:left;
 	opacity: 1 !important;
 	z-index:999;
@@ -42,8 +65,9 @@
 
 .cards {
 	position: fixed;
-	left:40%;
-	bottom:0px;
+	left:38%;
+	bottom:-20px;
+	width:40%;
 	opacity: 1 !important;
 }
 
@@ -84,8 +108,17 @@
 	height:100%;
 }
 
+/* onclick event */
+.cardSelected {
+	bottom:30px;
+	width:25%;
+}
+
 th {
 	height:20px;
+}
+td {
+	border-right:1px solid brown;
 }
 #cardTable tr {
 	border-style: solid;
