@@ -18,19 +18,19 @@
 
 /* Own cards in a hand */
 .cardPlayed1 {
-	bottom:20%;
+	bottom:30%;
 }
 .cardPlayed2 {
-	bottom:15%;
+	bottom:25%;
 }
 .cardPlayed3 {
-	bottom:10%;
+	bottom:20%;
 }
 .cardPlayed4 {
-	bottom:5%;
+	bottom:15%;
 }
 .cardPlayed5 {
-	bottom:0%;
+	bottom:10%;
 }
 
 /* Opponents cards in a hand */
@@ -38,16 +38,16 @@
 	top:40%;
 }
 .cardPlayedVs2 {
-	top:20%;
+	top:35%;
 }
 .cardPlayedVs3 {
-	top:15%;
+	top:30%;
 }
 .cardPlayedVs4 {
-	top:10%;
+	top:25%;
 }
 .cardPlayedVs5 {
-	top:5%;
+	top:20%;
 }
 
 .card {
@@ -58,6 +58,13 @@
 	z-index:999;
 	margin-left: -25px;
 }
+
+@media only screen and (max-width: 500px) {
+	.playedCard {
+		width:12%;
+	}
+}
+
 
 #card1 {
 	-ms-transform: rotate(-7deg); /* IE 9 */

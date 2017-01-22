@@ -186,6 +186,11 @@ function displayAllCards(opponentHands) {
 	$("#hand55").attr('src', "/pics/cards/" + hand5[4] + ".png");
 }
 
+// returns true if hand wins
+// false if lose
+function evaluateHand(hand) {
+	console.log("Evaluating hand: " + hand);
+}
 
 // **************************************************************
 // ##################### Socket Events ##########################
@@ -193,7 +198,8 @@ function displayAllCards(opponentHands) {
 
 $(document).ready(function() {
 	
-	$('#cardsButton').on('click',function(){
+	$('#cardsButton').on('click',function() {
+		console.log("Quiting game... " + isPlaying);
 		// Collapse the chatroom display to make room for card table
 		if(! isPlaying ) {
 			// request game from server
@@ -202,6 +208,7 @@ $(document).ready(function() {
 				addChatBubble("talk-bubble round talktext admin", data, "leftside");
 			});
 		} else {
+			console.log("Got into quiting game... " + isPlaying);
 			socket.emit('quit-card-game', $('#message').val(), function(data) {
 				// error message from server 
 				addChatBubble("talk-bubble round talktext admin", data, "leftside");
@@ -262,10 +269,15 @@ $(document).ready(function() {
 	});
 
 	socket.on('game-over', function(data) {
+		console.log("Server says game over");
 		// verify game was complete
 		if(verifyCardGameComplete(data)) {
 			displayAllCards(data);
-		}
+			var results = evaluateHand(hand1);
+			alert("Game Over: " + results);
+		} 
+		hideTable();
+		
 		$("#cardsButton").attr("src", "/pics/cards/back2.png");
 		isPlaying = false;
 		remaining_cards = 52;
@@ -325,8 +337,3 @@ $(document).ready(function() {
 		}
 	});
 });
-
-
-
-
-
