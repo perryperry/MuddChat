@@ -83,7 +83,10 @@ io.on('connection', function(socket) {
 	});
 
 	// when user disconnects
-	socket.on('disconnect', function(data){
+	socket.on('disconnect', function(data) {
+		if(socket.isPlaying) {
+			endGame(socket);
+		}
 		if(!socket.nickname) return;
 		delete users[socket.nickname];
 		updateNicknames();
@@ -115,11 +118,23 @@ socket.on('request-card-game', function(data) {
 			socket.isPlaying = true;
 			socket.opponent = data;
 			socket.host = true; // for keeping track of which deck to use.
+			socket.hand1 = new Array(); 
+			socket.hand2 = new Array(); 
+			socket.hand3 = new Array();
+			socket.hand4 = new Array();
+			socket.hand5 = new Array();
+			
 			// init the opponent
 			users[socket.opponent].host = false;
 			users[socket.opponent].cardCount = 0;
 			users[socket.opponent].isPlaying = true;
 			users[socket.opponent].opponent = socket.nickname;
+			users[socket.opponent].hand1 = new Array(); 
+			users[socket.opponent].hand2 = new Array(); 
+			users[socket.opponent].hand3 = new Array();
+			users[socket.opponent].hand4 = new Array();
+			users[socket.opponent].hand5 = new Array();
+			
 			fillDeck(socket);
 			// start the game
 			nextRound(socket);
@@ -134,6 +149,22 @@ socket.on('send-card-played', function(data) {
 	console.log("**** POKER DEBUG ****\n" + socket.nickname + " played " + data.card + " on hand " + data.hand);
 	// TODO:
 	// store the played card and which hand
+	if(data.hand == "hand1") {
+		socket.hand1.push(data.card);
+		console.log(socket.hand1);
+	} else if(data.hand == "hand2") {
+		socket.hand2.push(data.card);
+		console.log(socket.hand2);
+	} else if(data.hand == "hand3") {
+		socket.hand3.push(data.card);
+		console.log(socket.hand3);
+	} else if (data.hand == "hand4") {
+		socket.hand4.push(data.card);
+		console.log(socket.hand4);
+	} else if(data.hand == "hand5") {
+		socket.hand5.push(data.card);
+		console.log(socket.hand5);
+	}
 	// send opponent the played card and hand
 	users[socket.opponent].emit('receive-opponent-card-played', data);
 	socket.cardCount ++;
@@ -210,18 +241,54 @@ function fillDeck(socket) {
 
 // Reset both players for next future game
 function endGame(socket) {
-	if(socket.opponent) {
-		users[socket.opponent].emit('game-over', "game over");
+	if(users[socket.opponent]) {
+		users[socket.opponent].emit('game-over', 
+		{
+			hand1: socket.hand1,
+			hand2: socket.hand2,
+			hand3: socket.hand3,
+			hand4: socket.hand4,
+			hand5: socket.hand5,				
+		});
+		users[socket.nickname].emit('game-over', 
+		{
+			hand1: users[socket.opponent].hand1,
+			hand2: users[socket.opponent].hand2,
+			hand3: users[socket.opponent].hand3,
+			hand4: users[socket.opponent].hand4,
+			hand5: users[socket.opponent].hand5,				
+		});
+
 		fillDeck(users[socket.opponent]);
 		users[socket.opponent].cardCount = 0;
 		users[socket.opponent].isPlaying = false;
+		users[socket.opponent].hand1 = new Array(); 
+		users[socket.opponent].hand2 = new Array(); 
+		users[socket.opponent].hand3 = new Array();
+		users[socket.opponent].hand4 = new Array();
+		users[socket.opponent].hand5 = new Array();
 		users[socket.opponent].opponent = "";
+	} else {
+		socket.emit('game-over', 
+		{
+			hand1: ["/pics/cards/back1.png"],
+			hand2: ["/pics/cards/back1.png"],
+			hand3: ["/pics/cards/back1.png"],
+			hand4: ["/pics/cards/back1.png"],
+			hand5: ["/pics/cards/back1.png"],				
+		});
 	}
-	users[socket.nickname].emit('game-over', "game over");
+
+	
 	fillDeck(socket);
 	socket.cardCount = 0;
 	socket.isPlaying = false;
 	socket.opponent = "";
+	socket.hand1 = new Array(); 
+	socket.hand2 = new Array(); 
+	socket.hand3 = new Array();
+	socket.hand4 = new Array();
+	socket.hand5 = new Array();
 }
 
 });

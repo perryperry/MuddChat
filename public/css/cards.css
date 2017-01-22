@@ -11,6 +11,10 @@
 	width:8%;
 	padding-left: 5%;
 }
+.playedCard:hover {
+	margin-left: -15px;
+	width:9%;
+}
 
 /* Own cards in a hand */
 .cardPlayed1 {
@@ -31,7 +35,7 @@
 
 /* Opponents cards in a hand */
 .cardPlayedVs1 {
-	top:25%;
+	top:40%;
 }
 .cardPlayedVs2 {
 	top:20%;
@@ -117,7 +121,7 @@
 	width:90%;
 	height:65%;
 	display: none;
-	opacity: .4;
+	opacity: .8;
 	z-index:990;
 }
 

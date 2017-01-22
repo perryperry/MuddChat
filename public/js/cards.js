@@ -42,6 +42,12 @@ var hand3 = [];
 var hand4 = [];
 var hand5 = [];
 
+var hand1Vs = [];
+var hand2Vs = [];
+var hand3Vs = [];
+var hand4Vs = [];
+var hand5Vs = [];
+
 var hand1VsLength = 0;
 var hand2VsLength = 0;
 var hand3VsLength = 0;
@@ -116,7 +122,8 @@ function addCardToHand(cardURL, hand, handObject) {
 		if(hand.length < 4) {
 			handObject.append("<img class='playedCard cardPlayed" + hand.length + "' src='" + cardURL + "' />");
 		} else {
-			handObject.append("<img class='playedCard cardPlayed" + hand.length + "' src='/pics/cards/back2.png' />");
+			handObject.append("<img class='playedCard cardPlayed" + hand.length + 
+				"' id='" +  handObject.attr("id") + hand.length + "' src='/pics/cards/back2.png' />");
 		}
 		return true;
 	}
@@ -133,12 +140,52 @@ function addOpponentCardToHand(cardURL, handLength, handObject) {
 		if(handLength < 4) {
 			handObject.append("<img class='playedCard cardPlayedVs" + handLength + "' src='" + cardURL + "' />");
 		} else {
-			handObject.append("<img class='playedCard cardPlayedVs" + handLength + "' src='/pics/cards/back1.png' />");
+			handObject.append("<img class='playedCard cardPlayedVs" + handLength + 
+				"' id='" +  handObject.attr("id") + handLength  + "' src='/pics/cards/back1.png' />");
 		}
 		return true;
 	}
 	return false;
 }
+
+function verifyCardGameComplete(opponentHands) {
+	if(
+		opponentHands.hand1.length == 5 &&
+		opponentHands.hand2.length == 5 &&
+		opponentHands.hand3.length == 5 &&
+		opponentHands.hand4.length == 5 &&
+		opponentHands.hand5.length == 5 
+	) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function displayAllCards(opponentHands) {
+	$("#hand1Vs4").attr('src', opponentHands.hand1[3]);
+	$("#hand1Vs5").attr('src', opponentHands.hand1[4]);
+	$("#hand2Vs4").attr('src', opponentHands.hand2[3]);
+	$("#hand2Vs5").attr('src', opponentHands.hand2[4]);
+	$("#hand3Vs4").attr('src', opponentHands.hand3[3]);
+	$("#hand3Vs5").attr('src', opponentHands.hand3[4]);
+	$("#hand4Vs4").attr('src', opponentHands.hand4[3]);
+	$("#hand4Vs5").attr('src', opponentHands.hand4[4]);
+	$("#hand5Vs4").attr('src', opponentHands.hand5[3]);
+	$("#hand5Vs5").attr('src', opponentHands.hand5[4]);
+
+	$("#hand14").attr('src', "/pics/cards/" + hand1[3] + ".png");
+	$("#hand15").attr('src', "/pics/cards/" + hand1[4] + ".png");
+	$("#hand24").attr('src', "/pics/cards/" + hand2[3] + ".png");
+	$("#hand25").attr('src', "/pics/cards/" + hand2[4] + ".png");
+	$("#hand34").attr('src', "/pics/cards/" + hand3[3] + ".png");
+	$("#hand35").attr('src', "/pics/cards/" + hand3[4] + ".png");
+	$("#hand44").attr('src', "/pics/cards/" + hand4[3] + ".png");
+	$("#hand45").attr('src', "/pics/cards/" + hand4[4] + ".png");
+	$("#hand54").attr('src', "/pics/cards/" + hand5[3] + ".png");
+	$("#hand55").attr('src', "/pics/cards/" + hand5[4] + ".png");
+}
+
 
 // **************************************************************
 // ##################### Socket Events ##########################
@@ -215,6 +262,10 @@ $(document).ready(function() {
 	});
 
 	socket.on('game-over', function(data) {
+		// verify game was complete
+		if(verifyCardGameComplete(data)) {
+			displayAllCards(data);
+		}
 		$("#cardsButton").attr("src", "/pics/cards/back2.png");
 		isPlaying = false;
 		remaining_cards = 52;
@@ -233,20 +284,6 @@ $(document).ready(function() {
 		hand3VsLength = 0;
 		hand4VsLength = 0; 
 		hand5VsLength = 0;
-
-		alert(data);
-
-		$("#hand1").html("");
-		$("#hand2").html("");
-		$("#hand3").html("");
-		$("#hand4").html("");
-		$("#hand5").html("");
-		$("#hand1Vs").html("");
-		$("#hand2Vs").html("");
-		$("#hand3Vs").html("");
-		$("#hand4Vs").html("");
-		$("#hand5Vs").html("");
-		hideTable();
 	});
 
 	// ################################################
@@ -264,6 +301,7 @@ $(document).ready(function() {
 		}
 	});
 
+	// placing the card on the hand
 	$(".hand").on('click', function() {
 		var hand = $(this).attr("id");
 		if(selectedCard != "") {
