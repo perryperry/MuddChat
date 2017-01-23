@@ -113,21 +113,24 @@ function getCardInt(cardURL) {
 }
 
 function addCardToHand(cardURL, hand, handObject) {
-	console.log("Adding " + cardURL + " to " + hand);
-	if(hand.length < 5) {
-		var cardValue = getCardInt(cardURL);
-		card_count ++;
-		hand.push(cardValue);
-		$("img[src$='" + cardURL + "']").hide();
-		if(hand.length < 4) {
-			handObject.append("<img class='playedCard cardPlayed" + hand.length + "' src='" + cardURL + "' />");
-		} else {
-			handObject.append("<img class='playedCard cardPlayed" + hand.length + 
-				"' id='" +  handObject.attr("id") + hand.length + "' src='/pics/cards/back2.png' />");
+	
+	if(handObject.css('background-image') == 'none') {
+		
+		 console.log("Adding " + cardURL + " to " + hand);
+		 if(hand.length < 5) {
+			var cardValue = getCardInt(cardURL);
+			card_count ++;
+			hand.push(cardValue);
+		 	$("img[src$='" + cardURL + "']").hide();
+			if(hand.length < 4) {
+				handObject.css('background-image', 'url(' + cardURL + ')');
+			} else {
+				handObject.css('background-image', 'url("/pics/cards/back2.png")');
+			}
+			return true;
 		}
-		return true;
-	}
-	return false;
+	 }
+	 return false;
 }
 
 function addOpponentCardToHand(cardURL, handLength, handObject) {
@@ -138,10 +141,9 @@ function addOpponentCardToHand(cardURL, handLength, handObject) {
 		// hand.push(cardValue);
 		// $("img[src$='" + cardURL + "']").hide();
 		if(handLength < 4) {
-			handObject.append("<img class='playedCard cardPlayedVs" + handLength + "' src='" + cardURL + "' />");
+			handObject.css('background-image', 'url(' + cardURL + ')');
 		} else {
-			handObject.append("<img class='playedCard cardPlayedVs" + handLength + 
-				"' id='" +  handObject.attr("id") + handLength  + "' src='/pics/cards/back1.png' />");
+			handObject.css('background-image', 'url("/pics/cards/back2.png")');
 		}
 		return true;
 	}
@@ -246,21 +248,21 @@ $(document).ready(function() {
 		// addOpponentCardToHand(cardURL, hand, handObject);
 		var hand = data.hand;
 		var card = data.card;
-		if(hand == "hand1") {
+		if(hand.indexOf("hand1") >= 0) {
 			hand1VsLength ++;
-			addOpponentCardToHand(card, hand1VsLength, $("#hand1Vs")); 
-		} else if (hand == "hand2") {
+			addOpponentCardToHand(card, hand1VsLength, $("#" + hand)); 
+		} else if (hand.indexOf("hand2") >= 0) {
 			hand2VsLength ++;
-			addOpponentCardToHand(card, hand2VsLength, $("#hand2Vs"));
-		} else if (hand == "hand3") {
+			addOpponentCardToHand(card, hand2VsLength, $("#" + hand));
+		} else if (hand.indexOf("hand3") >= 0) {
 			hand3VsLength ++;
-			addOpponentCardToHand(card, hand3VsLength, $("#hand3Vs"));
-		} else if (hand == "hand4") {
+			addOpponentCardToHand(card, hand3VsLength, $("#" + hand));
+		} else if (hand.indexOf("hand4") >= 0) {
 			hand4VsLength ++;
-			addOpponentCardToHand(card, hand4VsLength, $("#hand4Vs"));
-		} else if (hand == "hand5") {
+			addOpponentCardToHand(card, hand4VsLength, $("#" + hand));
+		} else if (hand.indexOf("hand5") >= 0) {
 			hand5VsLength ++;
-			addOpponentCardToHand(card, hand5VsLength, $("#hand5Vs"));
+			addOpponentCardToHand(card, hand5VsLength, $("#" + hand));
 		}
 	});
 
@@ -316,17 +318,23 @@ $(document).ready(function() {
 	// placing the card on the hand
 	$(".hand").on('click', function() {
 		var hand = $(this).attr("id");
+
 		if(selectedCard != "") {
-			if(hand == "hand1") {
+			if(hand.match("^card1")) {
 				addCardToHand(selectedCard, hand1, $(this)); 
-			} else if (hand == "hand2") {
+				hand = hand + "Vs";
+			} else if (hand.match("^card2")) {
 				addCardToHand(selectedCard, hand2, $(this));
-			} else if (hand == "hand3") {
+				hand = hand + "Vs";
+			} else if (hand.match("^card3")) {
 				addCardToHand(selectedCard, hand3, $(this));
-			} else if (hand == "hand4") {
+				hand = hand + "Vs";
+			} else if (hand.match("^card4")) {
 				addCardToHand(selectedCard, hand4, $(this));
-			} else if (hand == "hand5") {
+				hand = hand + "Vs";
+			} else if (hand.match("^card5")) {
 				addCardToHand(selectedCard, hand5, $(this));
+				hand = hand + "Vs";
 			}
 			// Send the server the move played
 			socket.emit('send-card-played', {hand: hand, card: selectedCard}, function(data) {
