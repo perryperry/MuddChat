@@ -16,6 +16,7 @@
 // TODO: Draggable UI instead
 // 
 var isPlaying = false;
+var isExiting = false;
 var cardsSocket;
 
 // static immutable values, the rank of each card value
@@ -112,38 +113,41 @@ function getCardInt(cardURL) {
 	return parseInt(cardURL, 10);
 }
 
-function addCardToHand(cardURL, hand, handObject) {
+function addCardToHand(cardURL, hand, handObject, handNum) {
 	
 	if(handObject.css('background-image') == 'none') {
 		 if(hand.length <= 5) {
+		 	var positionId = (hand.length + 1) + "";
+		 	positionId = "card" + positionId + handNum;
 			var cardValue = getCardInt(cardURL);
-			console.log("Adding " + cardValue + " to " + hand);
+			console.log("Adding " + cardValue + " to " + positionId);
 			card_count ++;
 			hand.push(cardValue);
 		 	$("img[src$='" + cardURL + "']").hide();
 			if(hand.length < 4) {
-				console.log("In here for hand: " + hand.length);
-				handObject.css('background-image', 'url(' + cardURL + ')');
+				$('#' + positionId).css('background-image', 'url(' + cardURL + ')');
 			} else {
-				console.log("In here for hand: " + hand.length);
-				handObject.css('background-image', 'url("/pics/cards/back2.png")');
+				$('#' + positionId ).css('background-image', 'url("/pics/cards/back2.png")');
 			}
 		}
 	 }
 	 return hand;
 }
 
-function addOpponentCardToHand(cardURL, handLength, handObject) {
-	//console.log("Adding " + cardURL + " to " + hand);
+function addOpponentCardToHand(cardURL, handLength, handObject, handNum) {
+	console.log("Adding " + cardURL + " to " +  handLength + " **** " + handNum);
 	if(handLength <= 5) {
+		var positionId = handLength + "";
+		 	positionId = "card" + positionId + "" + handNum + "Vs";
 		var cardValue = getCardInt(cardURL);
 		card_count_opp ++;
 		// hand.push(cardValue);
 		// $("img[src$='" + cardURL + "']").hide();
+		console.log("In here for hand: " + positionId);
 		if(handLength < 4) {
-			handObject.css('background-image', 'url(' + cardURL + ')');
+			$('#' + positionId).css('background-image', 'url(' + cardURL + ')');
 		} else {
-			handObject.css('background-image', 'url("/pics/cards/back1.png")');
+			$('#' + positionId).css('background-image', 'url("/pics/cards/back1.png")');
 		}
 		return true;
 	}
@@ -210,8 +214,9 @@ function displayAllCards(opponentHands) {
 
 // returns true if hand wins
 // false if lose
-function evaluateHand(hand) {
-	console.log("Evaluating hand: " + hand);
+function evaluateHand(opponentHands, hand1, hand2, hand3, hand4, hand5) {
+	// TODO
+
 	return true;
 }
 
@@ -222,20 +227,26 @@ function evaluateHand(hand) {
 $(document).ready(function() {
 	
 	$('#cardsButton').on('click',function() {
-		console.log("Quiting game... " + isPlaying);
-		// Collapse the chatroom display to make room for card table
-		if(! isPlaying ) {
-			// request game from server
-			socket.emit('request-card-game', $('#message').val(), function(data) {
-				// error message from server 
-				addChatBubble("talk-bubble round talktext admin", data, "leftside");
-			});
+		
+		if(! isExiting) {
+			// Collapse the chatroom display to make room for card table
+			if(! isPlaying ) {
+				// request game from server
+				socket.emit('request-card-game', $('#message').val(), function(data) {
+					// error message from server 
+					addChatBubble("talk-bubble round talktext admin", data, "leftside");
+				});
+			 } 
+			 else {
+				// console.log("Got into quiting game... " + isPlaying);
+				socket.emit('quit-card-game', $('#message').val(), function(data) {
+					// error message from server 
+					addChatBubble("talk-bubble round talktext admin", data, "leftside");
+				});
+			}
 		} else {
-			console.log("Got into quiting game... " + isPlaying);
-			socket.emit('quit-card-game', $('#message').val(), function(data) {
-				// error message from server 
-				addChatBubble("talk-bubble round talktext admin", data, "leftside");
-			});
+			hideTable();
+			isExiting = false;
 		}
 	});
 
@@ -266,24 +277,23 @@ $(document).ready(function() {
 	// Receive opponent's card played on the table
 	socket.on('receive-opponent-card-played', function(data) {
 		console.log("Received " + data.card + " to play on opponent's " + data.hand);
-		// addOpponentCardToHand(cardURL, hand, handObject);
 		var hand = data.hand;
 		var card = data.card;
 		if(hand.indexOf("hand1") >= 0) {
 			hand1VsLength ++;
-			addOpponentCardToHand(card, hand1VsLength, $("#" + hand)); 
+			addOpponentCardToHand(card, hand1VsLength, $("#" + hand), "hand1"); 
 		} else if (hand.indexOf("hand2") >= 0) {
 			hand2VsLength ++;
-			addOpponentCardToHand(card, hand2VsLength, $("#" + hand));
+			addOpponentCardToHand(card, hand2VsLength, $("#" + hand), "hand2");
 		} else if (hand.indexOf("hand3") >= 0) {
 			hand3VsLength ++;
-			addOpponentCardToHand(card, hand3VsLength, $("#" + hand));
+			addOpponentCardToHand(card, hand3VsLength, $("#" + hand), "hand3");
 		} else if (hand.indexOf("hand4") >= 0) {
 			hand4VsLength ++;
-			addOpponentCardToHand(card, hand4VsLength, $("#" + hand));
+			addOpponentCardToHand(card, hand4VsLength, $("#" + hand), "hand4");
 		} else if (hand.indexOf("hand5") >= 0) {
 			hand5VsLength ++;
-			addOpponentCardToHand(card, hand5VsLength, $("#" + hand));
+			addOpponentCardToHand(card, hand5VsLength, $("#" + hand), "hand5");
 		}
 	});
 
@@ -296,17 +306,14 @@ $(document).ready(function() {
 		// verify game was complete
 		if(verifyCardGameComplete(data)) {
 			displayAllCards(data);
-			var results = evaluateHand(hand1);
-			alert("Game Over: " + results);
+			var results = evaluateHand(data, hand1, hand2, hand3, hand4, hand5);
 		} else {
 			console.log("It says the game isn't over...");
 			displayAllCards(data);
 		}
-
-		hideTable();
-		
 		$("#cardsButton").attr("src", "/pics/cards/back2.png");
 		isPlaying = false;
+		isExiting = true;
 		remaining_cards = 52;
 		// Current number of cards laid on the table this hand
 		card_count = 0;
@@ -346,20 +353,20 @@ $(document).ready(function() {
 
 		if(selectedCard != "") {
 			if(hand.match("hand1$")) {
-				addCardToHand(selectedCard, hand1, $(this)); 
+				addCardToHand(selectedCard, hand1, $(this), "hand1"); 
 				hand = hand + "Vs";
 			} else if (hand.match("hand2$")) {
-				addCardToHand(selectedCard, hand2, $(this));
+				addCardToHand(selectedCard, hand2, $(this), "hand2");
 				hand = hand + "Vs";
 			} else if (hand.match("hand3$")) {
-				addCardToHand(selectedCard, hand3, $(this));
+				addCardToHand(selectedCard, hand3, $(this), "hand3");
 				hand = hand + "Vs";
 			} else if (hand.match("hand4$")) {
-				addCardToHand(selectedCard, hand4, $(this));
+				addCardToHand(selectedCard, hand4, $(this), "hand4");
 				hand = hand + "Vs";
 			} else if (hand.match("hand5$")) {
 				console.log("In card5");
-				addCardToHand(selectedCard, hand5, $(this));
+				addCardToHand(selectedCard, hand5, $(this), "hand5");
 				hand = hand + "Vs";
 			}
 			// Send the server the move played

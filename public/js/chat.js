@@ -7,6 +7,16 @@ function startBrowser() {
 	$("#browser").prop("src", "http://www.duckduckgo.com");
 }
 
+function stopBrowser() {
+	$("#chatWrap").removeClass("makeRoomForCards");
+	$('#emojiSelectionWrapper').removeClass("makeRoomForCards");
+	//$('#cardTableWrapper').hide();
+	//$("#cards").hide();
+	$("#browser").hide();
+	//$("#browser").prop("src", "http://www.duckduckgo.com");
+}
+
+
 function goToPage(url) {
 	$("#browser").prop("src", url);
 }
@@ -28,9 +38,14 @@ $(document).ready(function(){
 	var curUserNameAutoFill = 0;
 
 	$("#browserButton").on('click', function() {
-		alert("hehe");
-		webSurf = true;
-		startBrowser();
+		if(webSurf) {
+			webSurf = false;
+			stopBrowser();
+		}
+		else {
+			webSurf = true;
+			startBrowser();
+		}
 	});
 
 
