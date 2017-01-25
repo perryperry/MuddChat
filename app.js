@@ -12,8 +12,6 @@ app.get('/', function(req, res){
 });
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/favicon.ico', express.static('pics/favicon.ico'));
-
 io.on('connection', function(socket) {
 
 	socket.on('new user', function(data, callback) {
