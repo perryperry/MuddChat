@@ -147,23 +147,22 @@ socket.on('request-card-game', function(data) {
 // receive the client's send card to a hand event
 socket.on('send-card-played', function(data) { 
 	console.log("**** POKER DEBUG ****\n" + socket.nickname + " played " + data.card + " on hand " + data.hand);
-	// TODO:
 	// store the played card and which hand
-	if(data.hand == "hand1") {
+	if(data.hand.includes("hand1")) {
 		socket.hand1.push(data.card);
-		console.log(socket.hand1);
-	} else if(data.hand == "hand2") {
+		console.log("Card played by " + socket.nickname + ": " + socket.hand1);
+	} else if(data.hand.includes("hand2")) {
 		socket.hand2.push(data.card);
-		console.log(socket.hand2);
-	} else if(data.hand == "hand3") {
+		console.log("Card played by " + socket.nickname + ": " + socket.hand2);
+	} else if(data.hand.includes("hand3")) {
 		socket.hand3.push(data.card);
-		console.log(socket.hand3);
-	} else if (data.hand == "hand4") {
+		console.log("Card played by " + socket.nickname + ": " + socket.hand3);
+	} else if (data.hand.includes("hand4")) {
 		socket.hand4.push(data.card);
-		console.log(socket.hand4);
-	} else if(data.hand == "hand5") {
+		console.log("Card played by " + socket.nickname + ": " + socket.hand4);
+	} else if(data.hand.includes("hand5")) {
 		socket.hand5.push(data.card);
-		console.log(socket.hand5);
+		console.log("Card played by " + socket.nickname + ": " + socket.hand5);
 	}
 	// send opponent the played card and hand
 	users[socket.opponent].emit('receive-opponent-card-played', data);
@@ -179,7 +178,7 @@ socket.on('send-card-played', function(data) {
 
 
 socket.on('quit-card-game', function(data) { 
-	console.log("ending game...");
+	
 	endGame(socket);
 });
 
@@ -241,6 +240,23 @@ function fillDeck(socket) {
 
 // Reset both players for next future game
 function endGame(socket) {
+
+	console.log("ending game between " + socket.nickname + " and " + users[socket.opponent].nickname);
+	console.log("Was " + socket.nickname + " the host?: " + + socket.host);
+	console.log("\n" + socket.nickname +"'s cards: \n");
+	console.log("hand1:" + socket.hand1);
+	console.log("hand2:" + socket.hand2);
+	console.log("hand3:" + socket.hand3);
+	console.log("hand4:" + socket.hand4);
+	console.log("hand5:" + socket.hand5);	
+	console.log("\n" + users[socket.opponent].nickname +"'s cards: \n");
+	console.log("hand1:" + users[socket.opponent].hand1);
+	console.log("hand2:" + users[socket.opponent].hand2);
+	console.log("hand3:" + users[socket.opponent].hand3);
+	console.log("hand4:" + users[socket.opponent].hand4);
+	console.log("hand5:" + users[socket.opponent].hand5);	
+
+
 	if(users[socket.opponent]) {
 		users[socket.opponent].emit('game-over', 
 		{

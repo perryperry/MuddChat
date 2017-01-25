@@ -36,11 +36,11 @@ var hand_count_opp = 0;
 
 var selectedCard = 0;
 
-var hand1 = [];
-var hand2 = [];
-var hand3 = [];
-var hand4 = [];
-var hand5 = [];
+var hand1 = new Array();
+var hand2 = new Array();
+var hand3 = new Array();
+var hand4 = new Array();
+var hand5 = new Array();
 
 var hand1Vs = [];
 var hand2Vs = [];
@@ -115,22 +115,22 @@ function getCardInt(cardURL) {
 function addCardToHand(cardURL, hand, handObject) {
 	
 	if(handObject.css('background-image') == 'none') {
-		
-		 console.log("Adding " + cardURL + " to " + hand);
-		 if(hand.length < 5) {
+		 if(hand.length <= 5) {
 			var cardValue = getCardInt(cardURL);
+			console.log("Adding " + cardValue + " to " + hand);
 			card_count ++;
 			hand.push(cardValue);
 		 	$("img[src$='" + cardURL + "']").hide();
 			if(hand.length < 4) {
+				console.log("In here for hand: " + hand.length);
 				handObject.css('background-image', 'url(' + cardURL + ')');
 			} else {
+				console.log("In here for hand: " + hand.length);
 				handObject.css('background-image', 'url("/pics/cards/back2.png")');
 			}
-			return true;
 		}
 	 }
-	 return false;
+	 return hand;
 }
 
 function addOpponentCardToHand(cardURL, handLength, handObject) {
@@ -143,7 +143,7 @@ function addOpponentCardToHand(cardURL, handLength, handObject) {
 		if(handLength < 4) {
 			handObject.css('background-image', 'url(' + cardURL + ')');
 		} else {
-			handObject.css('background-image', 'url("/pics/cards/back2.png")');
+			handObject.css('background-image', 'url("/pics/cards/back1.png")');
 		}
 		return true;
 	}
@@ -151,7 +151,24 @@ function addOpponentCardToHand(cardURL, handLength, handObject) {
 }
 
 function verifyCardGameComplete(opponentHands) {
+
+	console.log("Attempting to verify that the game is completed:\n");
+	console.log("hand1.length: " + hand1.length);
+	console.log("hand2.length: " + hand2.length);
+	console.log("hand3.length: " + hand3.length);
+	console.log("hand4.length: " + hand4.length);
+	console.log("hand5.length: " + hand5.length);
+	console.log("opponentHands.hand1.length: " + opponentHands.hand1.length);
+	console.log("opponentHands.hand2.length: " + opponentHands.hand2.length);
+	console.log("opponentHands.hand3.length: " + opponentHands.hand3.length);
+	console.log("opponentHands.hand4.length: " + opponentHands.hand4.length);
+	console.log("opponentHands.hand5.length: " + opponentHands.hand5.length);
 	if(
+		hand1.length == 5 &&		
+		hand2.length == 5 &&
+		hand3.length == 5 &&
+		hand4.length == 5 &&
+		hand5.length == 5 &&		
 		opponentHands.hand1.length == 5 &&
 		opponentHands.hand2.length == 5 &&
 		opponentHands.hand3.length == 5 &&
@@ -165,33 +182,37 @@ function verifyCardGameComplete(opponentHands) {
 }
 
 function displayAllCards(opponentHands) {
-	$("#hand1Vs4").attr('src', opponentHands.hand1[3]);
-	$("#hand1Vs5").attr('src', opponentHands.hand1[4]);
-	$("#hand2Vs4").attr('src', opponentHands.hand2[3]);
-	$("#hand2Vs5").attr('src', opponentHands.hand2[4]);
-	$("#hand3Vs4").attr('src', opponentHands.hand3[3]);
-	$("#hand3Vs5").attr('src', opponentHands.hand3[4]);
-	$("#hand4Vs4").attr('src', opponentHands.hand4[3]);
-	$("#hand4Vs5").attr('src', opponentHands.hand4[4]);
-	$("#hand5Vs4").attr('src', opponentHands.hand5[3]);
-	$("#hand5Vs5").attr('src', opponentHands.hand5[4]);
+	$("#card4hand1Vs").css({'background-image' : 'url(' + opponentHands.hand1[3] + ')'});
+	$("#card5hand1Vs").css({'background-image' : 'url(' + opponentHands.hand1[4] + ')'});
+	$("#card4hand2Vs").css({'background-image' : 'url(' + opponentHands.hand2[3] + ')'});
+	$("#card5hand2Vs").css({'background-image' : 'url(' + opponentHands.hand2[4] + ')'});
+	$("#card4hand3Vs").css({'background-image' : 'url(' + opponentHands.hand3[3] + ')'});
+	$("#card5hand3Vs").css({'background-image' : 'url(' + opponentHands.hand3[4] + ')'});
+	$("#card4hand4Vs").css({'background-image' : 'url(' + opponentHands.hand4[3] + ')'});
+	$("#card5hand4Vs").css({'background-image' : 'url(' + opponentHands.hand4[4] + ')'});
+	$("#card4hand5Vs").css({'background-image' : 'url(' + opponentHands.hand5[3] + ')'});
+	$("#card5hand5Vs").css({'background-image' : 'url(' + opponentHands.hand5[4] + ')'});
 
-	$("#hand14").attr('src', "/pics/cards/" + hand1[3] + ".png");
-	$("#hand15").attr('src', "/pics/cards/" + hand1[4] + ".png");
-	$("#hand24").attr('src', "/pics/cards/" + hand2[3] + ".png");
-	$("#hand25").attr('src', "/pics/cards/" + hand2[4] + ".png");
-	$("#hand34").attr('src', "/pics/cards/" + hand3[3] + ".png");
-	$("#hand35").attr('src', "/pics/cards/" + hand3[4] + ".png");
-	$("#hand44").attr('src', "/pics/cards/" + hand4[3] + ".png");
-	$("#hand45").attr('src', "/pics/cards/" + hand4[4] + ".png");
-	$("#hand54").attr('src', "/pics/cards/" + hand5[3] + ".png");
-	$("#hand55").attr('src', "/pics/cards/" + hand5[4] + ".png");
+	console.log("Ending game, display these cards? \n\n" + opponentHands.hand1 + 
+		"\n" + hand1);
+
+	$("#card4hand1").css('background-image', 'url("/pics/cards/' + hand1[3] + '.png")');
+	$("#card5hand1").css('background-image', 'url("/pics/cards/' + hand1[4] + '.png")');
+	$("#card4hand2").css('background-image', 'url("/pics/cards/' + hand2[3] + '.png")');
+	$("#card5hand2").css('background-image', 'url("/pics/cards/' + hand2[4] + '.png")');
+	$("#card4hand3").css('background-image', 'url("/pics/cards/' + hand3[3] + '.png")');
+	$("#card5hand3").css('background-image', 'url("/pics/cards/' + hand3[4] + '.png")');
+	$("#card4hand4").css('background-image', 'url("/pics/cards/' + hand4[3] + '.png")');
+	$("#card5hand4").css('background-image', 'url("/pics/cards/' + hand4[4] + '.png")');
+	$("#card4hand5").css('background-image', 'url("/pics/cards/' + hand5[3] + '.png")');
+	$("#card5hand5").css('background-image', 'url("/pics/cards/' + hand5[4] + '.png")');
 }
 
 // returns true if hand wins
 // false if lose
 function evaluateHand(hand) {
 	console.log("Evaluating hand: " + hand);
+	return true;
 }
 
 // **************************************************************
@@ -277,7 +298,11 @@ $(document).ready(function() {
 			displayAllCards(data);
 			var results = evaluateHand(hand1);
 			alert("Game Over: " + results);
-		} 
+		} else {
+			console.log("It says the game isn't over...");
+			displayAllCards(data);
+		}
+
 		hideTable();
 		
 		$("#cardsButton").attr("src", "/pics/cards/back2.png");
@@ -320,19 +345,20 @@ $(document).ready(function() {
 		var hand = $(this).attr("id");
 
 		if(selectedCard != "") {
-			if(hand.match("^card1")) {
+			if(hand.match("hand1$")) {
 				addCardToHand(selectedCard, hand1, $(this)); 
 				hand = hand + "Vs";
-			} else if (hand.match("^card2")) {
+			} else if (hand.match("hand2$")) {
 				addCardToHand(selectedCard, hand2, $(this));
 				hand = hand + "Vs";
-			} else if (hand.match("^card3")) {
+			} else if (hand.match("hand3$")) {
 				addCardToHand(selectedCard, hand3, $(this));
 				hand = hand + "Vs";
-			} else if (hand.match("^card4")) {
+			} else if (hand.match("hand4$")) {
 				addCardToHand(selectedCard, hand4, $(this));
 				hand = hand + "Vs";
-			} else if (hand.match("^card5")) {
+			} else if (hand.match("hand5$")) {
+				console.log("In card5");
 				addCardToHand(selectedCard, hand5, $(this));
 				hand = hand + "Vs";
 			}

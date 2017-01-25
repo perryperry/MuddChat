@@ -1,4 +1,6 @@
-
+.opponentHand {
+	border: 0 !important;
+}
 
 .hand {
 	position:relative;

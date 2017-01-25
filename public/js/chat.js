@@ -1,5 +1,19 @@
+function startBrowser() {
+	$("#chatWrap").addClass("makeRoomForCards");
+	$('#emojiSelectionWrapper').addClass("makeRoomForCards");
+	$('#cardTableWrapper').hide();
+	$("#cards").hide();
+	$("#browser").show();
+	$("#browser").prop("src", "http://www.duckduckgo.com");
+}
+
+function goToPage(url) {
+	$("#browser").prop("src", url);
+}
+
 $(document).ready(function(){
 	var notifications=0;
+	var webSurf = false;
 	var $imgForm = $('#imgForm');
 	var $nickForm = $('#setNick');
 	var $nickError = $('#nickError');
@@ -12,6 +26,15 @@ $(document).ready(function(){
 	var username = '';
 	var userNames = [];
 	var curUserNameAutoFill = 0;
+
+	$("#browserButton").on('click', function() {
+		alert("hehe");
+		webSurf = true;
+		startBrowser();
+	});
+
+
+
 
 	$("#loginWrapper").css("background", "url('/pics/emojis/helmets.gif')");
 
@@ -231,4 +254,8 @@ $(document).ready(function(){
 				}
 				shiftChatWindow();
 			});
+
+
+
+
 });
