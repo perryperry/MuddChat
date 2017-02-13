@@ -1,0 +1,23 @@
+@import "globals";
+
+nav.menu {
+  background-color: #2d2d2d;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 4em;
+  padding: .2em;
+  justify-content: space-around;
+
+  a {
+    color: $snow-white;
+    float:right;
+    margin-left:5px;
+  }
+
+  img {
+    position:relative;
+   top:5px;
+    width: 45px;
+  }
+}
