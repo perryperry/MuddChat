@@ -1,17 +1,17 @@
-import { PropTypes } from 'react'
+import { PropTypes} from 'react'
 import { Link } from 'react-router'
 import ChatForm from '../containers/ChatForm'
 import ChatWindow from '../containers/ChatWindow'
 import EmojiIcon from 'react-icons/lib/fa/smile-o'
 import '../../../stylesheets/ChatRoom.scss'
 
-const ChatRoom = ({loggedIn=false, username=""}) => { 
-	
+const ChatRoom = ({loggedIn=false, username="", socket}) => { 
+	socket.emit('join', {name: 'Billy'});
   	if(loggedIn) {
 	    return(
 	        <div className="chat-wrapper">
 	           <ChatWindow />
-	           <ChatForm/>
+	           <ChatForm socket={socket}/>
 	        </div>
 	    )
 	} else {

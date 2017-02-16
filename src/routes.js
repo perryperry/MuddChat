@@ -15,8 +15,7 @@ const routes = (
             <Route path="emojis" component={Emoji} />
             <Route path="options" component={Options} />
         	<Route path="*" component={Whoops404}/>
-        </Route>
-        
+        </Route>  
     </Router>
 )
 

@@ -1,5 +1,21 @@
+.landingWrap {
+	position:relative;
+	background-color:lightgreen;
+	width:100%;
+	height:calc(100%);
+	margin-top:0px;
+}
+
 .videoWrap {
 	position:relative;
-	height:300px;
+	top:10px;
 	margin: auto;
+	width:50%;
+}
+
+
+.controls {
+	width:100px;
+	display:inline;
+	font-size: 100px;
 }

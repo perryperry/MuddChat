@@ -4,17 +4,18 @@ import { LocalForm, Control } from 'react-redux-form';
 import EmojiIcon from 'react-icons/lib/fa/smile-o'
 import '../../../stylesheets/ChatRoom.scss'
 
-const ChatForm = ({loggedIn=false, username="", sendMessage}) => { 
-	const handleChange = (values) => {console.log(values) }
+const ChatForm = ({loggedIn=false, username="", sendMessage, socket}) => { 
+	const handleChange = (values) => {}
   	const handleUpdate =(form) => {}
   	const handleSubmit =(username, values) => { 
+  		socket.emit('send-msg', values.message);
   		console.log( username +  " sending message: " + values.message)
   		sendMessage(username, values.message);
+  		document.getElementsByClassName('chat-input')[0].value = '';
   	}
 	    return(
 	        <div className="chat-form-wrapper">
 	        <LocalForm
-
 		        onUpdate={(form) => handleUpdate(form)}
 		        onChange={(values) => handleChange(values)}
 		        onSubmit={(values) => handleSubmit(username, values)}

@@ -11,14 +11,15 @@ const Menu = () => {
 
 	    <nav className="menu">
 	    	<img src="/pics/yota.png" />
-	        <Link to="/" activeClassName="selected">
-	            <HomeIcon />
+	    	  <Link to="/options" activeClassName="selected">
+	            <Options />
 	        </Link>
+	       
 	        <Link to="/chat-room" activeClassName="selected">
 	            <ChatIcon />
 	        </Link>
-	        <Link to="/options" activeClassName="selected">
-	            <Options />
+	       <Link to="/" activeClassName="selected">
+	            <HomeIcon />
 	        </Link>
 	    </nav> 
 	)

@@ -2,6 +2,7 @@ import Menu from './ui/Menu'
 import ShowErrors from './containers/ShowErrors'
 import '../stylesheets/index.scss'
 
+
 export const App = ({children}) =>
     <div className="app">
         <Menu/>

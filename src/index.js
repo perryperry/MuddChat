@@ -1,5 +1,3 @@
-// Tutorial file
-
 import C from './constants'
 import React from 'react'
 import { render } from 'react-dom'
@@ -8,6 +6,7 @@ import sampleData from './initialState.json'
 import storeFactory from './store'
 import { Provider } from 'react-redux'
 import { addError } from './actions'
+import io from 'socket.io-client'
 
 const initialState = (localStorage["redux-store"]) ?
     JSON.parse(localStorage["redux-store"]) :
@@ -31,7 +30,7 @@ window.store = store
 window.addEventListener("error", handleError)
 
 render(
-	<Provider store={store}>
+	<Provider store={store}  >
 	   {routes}
 	</Provider>,
   document.getElementById('react-container')

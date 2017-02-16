@@ -1,12 +1,12 @@
 import { PropTypes } from 'react'
 import { Link } from 'react-router'
 import EmojiIcon from 'react-icons/lib/fa/smile-o'
-import '../../stylesheets/ChatRoom.scss'
+import '../../stylesheets/Options.scss'
 
 const Options = ({loggedIn=false, username=""}) => { 
     return(
-        <div className="options-window">
-           <table>
+        <div className="optionsWrap">
+           <table className="options">
 	           	<thead>
 	           		<tr>
 	           			<th>Options</th>
