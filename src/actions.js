@@ -17,6 +17,13 @@ export const setUserName = (name) => {
     }
 }
 
+export const addMessage = (message) => {
+    return {
+        type: C.ADD_MESSAGE,
+        payload: message
+    }
+}
+
 export const addError = (message) => 
 ({
       type: C.ADD_ERROR,

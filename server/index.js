@@ -43,5 +43,6 @@ io.sockets.on('connection', function (socket) {
 
      socket.on('send-msg', function(payload) {
         console.log("Message received: %s", payload);
+        io.sockets.emit('receive-message', payload);
     });
 });

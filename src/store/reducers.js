@@ -34,12 +34,24 @@ export const username = (state="", action) => {
   }
 }
 
+export const messages = (state=[], action) => {
+  switch(action.type) {
+    case C.ADD_MESSAGE :
+      return [
+        ...state,
+         action.payload,
+      ]
+    default: 
+      return state
+  }
+}
 
 
 export default combineReducers({
   errors,
   loggedIn,
   username,
+  messages,
   form: formReducer
 })
 

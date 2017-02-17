@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 const mapStateToProps = (state) => {
 	return {
 		loggedIn: state.loggedIn, 
-		username: state.username
+		username: state.username,
+		messages: state.messages
 	}
 }
 

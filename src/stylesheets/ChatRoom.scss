@@ -9,6 +9,7 @@ div.chat-wrapper {
 .chat-window {
 	position:relative;
 	background-color: white;
+	overflow:scroll;
 	height:80%;
 	width:90%;
 	margin:auto;
@@ -34,4 +35,19 @@ div.chat-form-wrapper {
 	margin-top:5px;
 	float:right;
 	padding:5px;
+}
+
+.message {
+	font-size:15px;
+	font-family:sans-serif;
+	width: 50%;
+	margin:10px;
+	padding:10px;
+	border-radius:20px;
+	border-style:solid;
+	border-color:lightblue;
+	opacity:.8;
+	word-wrap: break-word;
+
+	
 }

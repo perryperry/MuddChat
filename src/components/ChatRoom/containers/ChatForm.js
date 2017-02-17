@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {	
 	return {
 		sendMessage: (message) => {
-			// do something
+			
 		}
 	}
 }
