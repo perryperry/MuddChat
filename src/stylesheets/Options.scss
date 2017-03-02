@@ -6,11 +6,35 @@ table.options {
 	font-family:sans-serif;
 	padding:10px;
 	color:white;
-	width:100%;
+	width:20%;
 }
-th {
+table.options {
+	display:block;
+	margin:auto;
+}
+
+table.options th {
 	color:black;
 }
-td {
+table.options td {
+	font-size:15px;
+}
+.icon {
+	font-size:30px;
 	text-align:center;
+}
+.option {
+	color:white;
+	 text-decoration: none;
+}
+
+.black {
+	color:black;
+}
+
+.pokerIcon {
+	width: 28px;
+	height:40px;
+	background-image: url('/pics/cards/back1.png');
+	background-size: contain;
 }

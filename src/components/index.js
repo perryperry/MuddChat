@@ -1,11 +1,11 @@
-import Menu from './ui/Menu'
-import ShowErrors from './containers/ShowErrors'
+import Menu from './General/containers/Menu'
+import ShowErrors from './General/containers/ShowErrors'
 import '../stylesheets/index.scss'
 
-
 export const App = ({children}) =>
+	
     <div className="app">
-        <Menu/>
+        <Menu />
         {children}
         <ShowErrors />
     </div>

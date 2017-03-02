@@ -4,13 +4,23 @@ import EmojiIcon from 'react-icons/lib/fa/smile-o'
 import Message from './Message'
 import '../../../stylesheets/ChatRoom.scss'
 
-const ChatWindow = ({messages=[], username="", socket}) => { 
+import {socket} from '../../../actions/chatActions'
+
+const ChatWindow = ({messages=[], username="", addMsg}) => { 
+   
     return(
         <div className="chat-window">
         	 {(messages.length) ?
-	            messages.map((message, i) =>
-	                
-	                    <Message key={i} msg={message} />
+	            messages.map((message, i) => 
+
+	               <div key={i} className="messageWrap" >
+                        <div className={message.class}>
+                            <img className="emoji" src={message.emoji} />
+                            <span className="messageSpan">{message.msg}</span>
+                            <span className="username">{message.username}</span>
+                        </div>
+                        
+                    </div>
 	               
 	            ) : null
 	        }
@@ -19,7 +29,8 @@ const ChatWindow = ({messages=[], username="", socket}) => {
 }
 ChatWindow.propTypes = {
     loggedIn: PropTypes.bool,
-    username: PropTypes.string
+    username: PropTypes.string,
+    chatJoined: PropTypes.bool
 }
 
 export default ChatWindow

@@ -1,5 +1,6 @@
 import ChatWindow from '../ui/ChatWindow'
 import { connect } from 'react-redux'
+import { addMessage } from '../../../actions/chatActions'
 
 const mapStateToProps = (state) => {
 	return {
@@ -9,6 +10,11 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const Container = connect(mapStateToProps)(ChatWindow)
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addMsg: (payload) => { dispatch(addMessage(payload)) }
+	}
+}
+const Container = connect(mapStateToProps, mapDispatchToProps )(ChatWindow)
 
 export default Container

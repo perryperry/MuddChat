@@ -5,7 +5,9 @@
   "main": "./dist",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server",
-    "muddchat": "./node_modules/.bin/babel-node ./server --port 3333"
+    "muddchat": "./node_modules/.bin/babel-node ./server/chat --port 3333",
+    "fantasyScraper": "./node_modules/.bin/babel-node ./server/fantasy --port 3456",
+    "poker": "./node_modules/.bin/babel-node ./server/poker --port 3765"
   },
   "repository": {
     "type": "git",
@@ -23,17 +25,22 @@
   },
   "homepage": "https://github.com/MoonTahoe/ski-day-counter-redux#readme",
   "dependencies": {
+    "axios": "^0.15.3",
+    "cheerio": "^0.22.0",
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
     "minimist": "^1.2.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-drag": "^0.3.0",
+    "react-draggable": "^2.2.3",
     "react-html5video": "^1.4.0",
     "react-icons": "^2.2.1",
     "react-redux": "^4.4.5",
     "react-redux-form": "^1.5.5",
     "react-router": "^2.8.1",
+    "react-socket": "^1.0.0-beta.0",
     "react.video": "^1.0.14",
     "redux": "^3.6.0",
     "redux-form": "^6.5.0",

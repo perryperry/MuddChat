@@ -4,17 +4,11 @@ import { connect } from 'react-redux'
 const mapStateToProps = (state) => {
 	return {
 		loggedIn: state.loggedIn, 
-		username: state.username
+		username: state.username,
+		emoji: state.emoji
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {	
-	return {
-		sendMessage: (message) => {
-			
-		}
-	}
-}
-const Container = connect(mapStateToProps, mapDispatchToProps)(ChatForm)
+const Container = connect(mapStateToProps)(ChatForm)
 
 export default Container

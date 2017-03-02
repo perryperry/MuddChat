@@ -6,7 +6,6 @@ import sampleData from './initialState.json'
 import storeFactory from './store'
 import { Provider } from 'react-redux'
 import { addError } from './actions'
-import io from 'socket.io-client'
 
 const initialState = (localStorage["redux-store"]) ?
     JSON.parse(localStorage["redux-store"]) :

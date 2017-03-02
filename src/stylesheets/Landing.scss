@@ -1,9 +1,7 @@
 .landingWrap {
-	position:relative;
-	background-color:lightgreen;
 	width:100%;
-	height:calc(100%);
-	margin-top:0px;
+	background-color:lightgreen;
+	padding: 15px;
 }
 
 .videoWrap {
@@ -11,11 +9,29 @@
 	top:10px;
 	margin: auto;
 	width:50%;
+	margin-bottom:15px;
 }
 
 
 .controls {
 	width:100px;
-	display:inline;
+	display:block;
 	font-size: 100px;
+}
+
+.title {
+	color:white;
+	font-size:30px;
+	font-family: 'Press Start 2P', sans-serif;
+	text-align:center;
+}
+.titleWrap {
+	position:relative;
+	width:50%;
+	margin:auto;
+	padding:0px;
+}
+#donald {
+	padding:0;
+	color:orange;
 }

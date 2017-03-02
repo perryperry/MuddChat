@@ -2,23 +2,21 @@ import { PropTypes} from 'react'
 import { Link } from 'react-router'
 import ChatForm from '../containers/ChatForm'
 import ChatWindow from '../containers/ChatWindow'
+import Emojis from './Emojis'
 import EmojiIcon from 'react-icons/lib/fa/smile-o'
 import '../../../stylesheets/ChatRoom.scss'
 
-const ChatRoom = ({loggedIn=false, username="", socket, addMsg}) => { 
-	socket.emit('join', {name: 'Billy'});
-	
-	socket.on('receive-message', function (payload) {
-		console.log("Received " + payload); // + " from " + payload.username);
-		addMsg(payload);
-	});
 
+const ChatRoom = ({loggedIn=false, joinedChat=false, username="", emojis,showEmojis=false}) => { 
 
   	if(loggedIn) {
 	    return(
 	        <div className="chat-wrapper">
-	           <ChatWindow socket={socket} />
-	           <ChatForm socket={socket} />
+	        {(showEmojis)?
+	           <Emojis emojis={emojis} /> : null
+	        }
+	           <ChatWindow />
+	           <ChatForm />
 	        </div>
 	    )
 	} else {

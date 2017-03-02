@@ -1,27 +1,18 @@
 import ChatRoom from '../ui/ChatRoom'
 import { connect } from 'react-redux'
-import io from 'socket.io-client'
-import {addMessage} from '../../../actions'
-let socket = io(`http://localhost:3333`)
-
-
+import {joinChat, connectSocket} from '../../../actions'
 
 const mapStateToProps = (state) => {
+
 	return {
 		loggedIn: state.loggedIn, 
 		username: state.username,
-		socket: socket
+		joinedChat: state.joinedChat,
+		emojis: state.emojis,
+		showEmojis: state.showEmojis
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {	
-	return {
-		addMsg: (message) => {
-			dispatch(addMessage(message))
-		}
-	}
-}
-
-const Container = connect(mapStateToProps,mapDispatchToProps)(ChatRoom)
+const Container = connect(mapStateToProps)(ChatRoom)
 
 export default Container

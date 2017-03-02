@@ -1,7 +1,13 @@
-const Message = ({msg=""}) => { 
+import Emoji from "./Emoji"
+
+const Message = (msg) => { 
+	
 
 	return (
-		<div className="message" >{msg}</div>
+		<div className="message" >
+			<Emoji/>
+			{msg}
+		</div>
 	)
 
 }

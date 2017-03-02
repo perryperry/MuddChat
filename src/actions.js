@@ -1,4 +1,5 @@
 import C from './constants'
+
 import fetch from 'isomorphic-fetch'
 
 export const tryLogIn = (name) => {
@@ -6,6 +7,13 @@ export const tryLogIn = (name) => {
  	return {
         type: C.LOG_IN,
         payload: true
+    }
+}
+
+export const logOutUser = () => {
+    return {
+        type: C.LOG_OUT,
+        payload: false
     }
 }
 
@@ -17,10 +25,16 @@ export const setUserName = (name) => {
     }
 }
 
-export const addMessage = (message) => {
+export const joinChat = () => {
     return {
-        type: C.ADD_MESSAGE,
-        payload: message
+        type: C.JOIN_CHAT
+    }
+}
+
+export const clearMessages = () => {
+    return {
+        type: C.CLEAR_MESSAGES,
+        payload: []
     }
 }
 
@@ -34,5 +48,18 @@ export const clearError = index =>
 ({
         type: C.CLEAR_ERROR,
         payload: index
-})   
+}) 
 
+export const showEmojis = () => 
+{
+    return {
+        type: C.SHOW_EMOJIS
+    }
+}
+
+export const connectSocket = () => {
+    return {
+        type:C.CONNECT_SOCKET,
+        payload: true
+    }
+}
