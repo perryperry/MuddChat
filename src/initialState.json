@@ -7,7 +7,7 @@
 	"emoji": "/pics/emojis/emoji1.png",
 	"joinedChat": false,
 	"showEmojis": false,
-	"scoreboard": {},
+	"scoreboard": [],
 	"pokerHand": {
 		"card1": "",
 		"card2": "",

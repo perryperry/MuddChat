@@ -86,7 +86,7 @@ export const showEmojis = (state=false, action) => {
   }
 }
 
-export const scoreboard = (state={}, action) => {
+export const scoreboard = (state=[], action) => {
   console.log("Got to here: " + action.payload)
    switch(action.type) {
     case C.SET_SCOREBOARD:

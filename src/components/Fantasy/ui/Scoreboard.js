@@ -2,7 +2,7 @@ import '../../../stylesheets/Fantasy.scss'
 import Matchup from './Matchup'
 import MatchupDetailed from './MatchupDetailed'
 
-const Scoreboard = ({scoreboard={}, setScoreBoardWeek}) => {
+const Scoreboard = ({scoreboard=[], setScoreBoardWeek}) => {
 
   const handleOnChange = (e) => {
     setScoreBoardWeek(e.target.value)
@@ -35,7 +35,7 @@ const Scoreboard = ({scoreboard={}, setScoreBoardWeek}) => {
               )
           })
         } 
-      <MatchupDetailed matchup={scoreboard[3]} />
+     
 		</div>
 
    
