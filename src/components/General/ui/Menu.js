@@ -9,34 +9,34 @@ import '../../../stylesheets/Menu.scss'
 
 const Menu = ({loggedIn=false, showEmojis=false, toggleEmojis}) => {
 	
-	return (
-	    <nav className="menu">
-			<img src="/pics/yota.png" /> 
+	{if(loggedIn) {
+		return (
+		    <nav className="menu">
 
-			{loggedIn ?
-	    		<Link to="/options" activeClassName="selected">
-	        		<Options />
-	        	</Link>
-	          : null}
-	        {(loggedIn) ?
-	        <Link to="/chat-room" activeClassName="selected" >
-	            <ChatIcon />
-	        </Link>
-	         : null}
+				<img src="/pics/yota.png" /> 
+				<Link to="/options" activeClassName="selected">
+		    		<Options />
+		    	</Link>
+		      
+		        <Link to="/chat-room" activeClassName="selected" >
+		            <ChatIcon />
+		        </Link>
 
+		         <Link to="/chat-room" activeClassName="selected">
+		         	<Smile onClick={toggleEmojis}/>
+				 </Link>
 
-	          <Link to="/chat-room" activeClassName="selected">
-	         		<Smile onClick={toggleEmojis}/>
-			 </Link>
-
-
-	       {(loggedIn) ?
-	       <Link to="/" activeClassName="selected">
-	            <HomeIcon />
-	        </Link>
-	         : null}
-	    </nav> 
-	)
+			     <Link to="/" activeClassName="selected">
+			     	<HomeIcon />
+			     </Link>
+		    </nav> 
+		)
+	} else {
+		return (
+			<span></span>
+		)
+	}
+}
 }
 
 export default Menu

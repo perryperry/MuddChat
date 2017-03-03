@@ -17,7 +17,6 @@ export const setScoreboard = (week) => (dispatch) => {
 	        type: C.SET_SCOREBOARD,
 	        payload: response.data
 	    })
-	    console.log("hsldjflksdjflksdjf")
 	  })
 	  .catch(function (error) {
 	    console.log(error);
