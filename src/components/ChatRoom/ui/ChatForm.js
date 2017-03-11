@@ -4,7 +4,7 @@ import { LocalForm, Control } from 'react-redux-form';
 import EmojiIcon from 'react-icons/lib/fa/smile-o'
 import '../../../stylesheets/ChatRoom.scss'
 import {sendMessage} from '../../../actions/chatActions'
-
+import Emoji from './Emoji'
 
 const ChatForm = ({loggedIn=false, username="", emoji="/pics/emojis/emoji37.png"}) => { 
 	const handleChange = (values) => {}
@@ -17,11 +17,12 @@ const ChatForm = ({loggedIn=false, username="", emoji="/pics/emojis/emoji37.png"
   	
     return(
         <div className="chat-form-wrapper">
+        
         <LocalForm
 	        onUpdate={(form) => handleUpdate(form)}
 	        onChange={(values) => handleChange(values)}
-	        onSubmit={(values) => handleSubmit(username, values)}
-	      	>
+	        onSubmit={(values) => handleSubmit(username, values)}>
+          <Emoji emoji={emoji} className="float-left" />
 	        <Control.text model=".message" className="chat-input" />
 	         <button className="chat-submit" >Send</button>
 	      </LocalForm>

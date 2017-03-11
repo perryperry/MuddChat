@@ -1,5 +1,6 @@
 import { PropTypes } from 'react'
 import { Link } from 'react-router'
+import ScoreboardSelect from '../../Fantasy/containers/ScoreboardSelect'
 import HomeIcon from 'react-icons/lib/fa/home'
 import ChatIcon from 'react-icons/lib/fa/comment-o'
 import Options from 'react-icons/lib/fa/bars'
@@ -12,7 +13,7 @@ const Menu = ({loggedIn=false, showEmojis=false, toggleEmojis}) => {
 	{if(loggedIn) {
 		return (
 		    <nav className="menu">
-
+		    	<ScoreboardSelect />
 				<img src="/pics/yota.png" /> 
 				<Link to="/options" activeClassName="selected">
 		    		<Options />

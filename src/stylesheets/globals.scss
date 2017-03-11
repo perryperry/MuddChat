@@ -1,13 +1,18 @@
 $snow-white: #d3d5e3;
-* {
-	box-sizing: border-box;
+*
+{
+    box-sizing: border-box;
 }
 
-.center {
-	display:block;
-	margin:auto;
+.center
+{
+    display: block;
+
+    margin: auto;
 }
 
-::-webkit-scrollbar { 
-    display: none; 
+::-webkit-scrollbar
+{
+    display: none;
 }
+

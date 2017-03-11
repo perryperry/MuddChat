@@ -11,12 +11,12 @@ const ChatRoom = ({loggedIn=false, joinedChat=false, username="", emojis,showEmo
 
   	if(loggedIn) {
 	    return(
-	        <div className="chat-wrapper">
+	        <div className="chat-wrapper" >
+	        <ChatWindow />
+	           <ChatForm />
 	        {(showEmojis)?
 	           <Emojis emojis={emojis} /> : null
 	        }
-	           <ChatWindow />
-	           <ChatForm />
 	        </div>
 	    )
 	} else {

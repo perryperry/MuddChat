@@ -1,5 +1,5 @@
 import C from '../constants'
-import appReducer from './reducers'
+import appReducer from './reducers/combinedReducers'
 import thunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 

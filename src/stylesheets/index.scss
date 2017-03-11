@@ -1,27 +1,35 @@
-@import "globals";
+@import 'globals';
 
 html,
 body,
 div#react-container,
-div.app {
-  height: 100%;
-  padding: 0;
-  margin: 0;
+div.app
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-body {
-  font-size: 55%;
+body
+{
+    font-size: 55%;
 }
 
-h1, label {
-  margin: 0
+h1,
+label
+{
+    margin: 0;
 }
 
-div.whoops-404 {
-  background-color: white;
-  font-size: 2em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+div.whoops-404
+{
+    font-size: 2em;
+
+    display: flex;
+
+    background-color: white;
+
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }

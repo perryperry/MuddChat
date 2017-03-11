@@ -1,57 +1,73 @@
-.scoreboardWrap {
-	background-color:#C0C0C0;	
-	width:100%;
-	padding:10px;
+.scoreboardWrap
+{
+    float:left;
+    height:100%;
+    padding: 10px;
+    background-color: #c0c0c0;
 }
 
-.tableWrap {
-	position:relative;
-	width:100%;
+.tableWrap
+{
+    position: relative;
+    width: 100%;
 }
 
-.matchupTable {
-	position:relative;
-	width:190px;
-	text-align: right;
-	font-family: sans-serif;
-	background-color: #F0F0F0;	
-	border-collapse: collapse;
-	font-size:10px;
-	margin:5px;
+.matchupTable
+{
+    float:left;
+    font-family: sans-serif;
+    font-size: 10px;
+    width: 190px;
+    margin: 5px;
+    border-collapse: collapse;
+    text-align: right;
+    background-color: #f0f0f0;
 }
-.matchupTable thead {
-	position:relative;
-	width:100%;
+.matchupTable thead
+{
+    position: relative;
+
+    width: 100%;
 }
 
-.matchupTable thead tr {
-	background-color:#B0B0B0;
-	color:white;
-	height:15px;
-	margin-top:5px;
+.matchupTable thead tr
+{
+    height: 15px;
+    margin-top: 5px;
+
+    color: white;
+    background-color: #FC565A;
 }
-.matchupTable tbody tr {
-	width:100%;
+.matchupTable tbody tr
+{
+    width: 100%;
 }
 
-.matchupTable td:nth-child(2) {
-	width:25%;
+.matchupTable td:nth-child(2)
+{
+    width: 25%;
 }
 
-.matchupTable td:nth-child(1) {
-	padding-bottom:5px;
+.matchupTable td:nth-child(1)
+{
+    padding-bottom: 5px;
 }
 
-td[data-rel='record'] {
-   text-align:right;
-  vertical-align:top;
-   font-size:8px;
-   padding:0px;
-   padding-right:5px;
+td[data-rel='record']
+{
+    font-size: 8px;
+
+    padding: 0;
+    padding-right: 5px;
+
+    text-align: right;
+    vertical-align: top;
 }
 
-td[data-rel='score'] {
-	text-align:right;
-	padding-top:10px;
-	padding-right:10px;
+td[data-rel='score']
+{
+    padding-top: 10px;
+    padding-right: 10px;
+
+    text-align: right;
 }

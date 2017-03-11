@@ -1,37 +1,51 @@
-.landingWrap {
-	width:100%;
-	background-color:lightgreen;
-	padding: 15px;
+.landingWrap
+{
+    width: 100%;
+    padding: 15px;
+
+    background-color: lightgreen;
 }
 
-.videoWrap {
-	position:relative;
-	top:10px;
-	margin: auto;
-	width:50%;
-	margin-bottom:15px;
+.videoWrap
+{
+    position: relative;
+    top: 10px;
+
+    width: 50%;
+    margin: auto;
+    margin-bottom: 15px;
 }
 
 
-.controls {
-	width:100px;
-	display:block;
-	font-size: 100px;
+.controls
+{
+    font-size: 100px;
+
+    display: block;
+
+    width: 100px;
 }
 
-.title {
-	color:white;
-	font-size:30px;
-	font-family: 'Press Start 2P', sans-serif;
-	text-align:center;
+.title
+{
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 30px;
+
+    text-align: center;
+
+    color: white;
 }
-.titleWrap {
-	position:relative;
-	width:50%;
-	margin:auto;
-	padding:0px;
+.titleWrap
+{
+    position: relative;
+
+    width: 50%;
+    margin: auto;
+    padding: 0;
 }
-#donald {
-	padding:0;
-	color:orange;
+#donald
+{
+    padding: 0;
+
+    color: orange;
 }

@@ -6,15 +6,6 @@ const mapStateToProps = state => ({
 	scoreboard: state.scoreboard
 })
 
-
-const mapDispatchToProps = (dispatch) => {	
-	return {
-		setScoreBoardWeek: (week) => {
-			dispatch(setScoreboard(week))
-		}
-	}
-}
-
-const Container = connect(mapStateToProps, mapDispatchToProps)(Scoreboard)
+const Container = connect(mapStateToProps)(Scoreboard)
 
 export default Container
