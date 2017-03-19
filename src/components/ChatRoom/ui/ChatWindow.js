@@ -7,9 +7,8 @@ import '../../../stylesheets/ChatRoom.scss'
 import {socket} from '../../../actions/chatActions'
 
 const ChatWindow = ({messages=[], username="", addMsg}) => { 
-   
     return(
-        <div className="chat-window">
+        <div className="chat-window" id="chatwindow" >
         	 {(messages.length) ?
 	            messages.map((message, i) => 
 
