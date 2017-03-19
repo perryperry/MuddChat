@@ -142,10 +142,10 @@ div.chat-form-wrapper
     position:absolute;
     overflow: scroll;
     width: 10%;
-    height: calc(80% - 41px);
+    height: calc(80% - 60px);
     right:0;
-    top:70px;
-    background-color: lightgreen;
+    top:100px;
+    background-color: lightred;
 }
 
 .emojisWrap::-webkit-scrollbar

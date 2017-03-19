@@ -1,5 +1,6 @@
 import { PropTypes } from 'react'
 import { Link } from 'react-router'
+import ScoreboardSelect from '../../Fantasy/containers/ScoreboardSelect'
 import ChatIcon from 'react-icons/lib/fa/comment'
 import News from 'react-icons/lib/fa/newspaper-o'
 import Stats from 'react-icons/lib/fa/bar-chart'
@@ -18,6 +19,10 @@ const Options = ({loggedIn=false, logOut, clearChat}) => {
 	           		</tr>
 	           	</thead>
 	           	<tbody>
+	           		<tr>
+	           			<td>Scoreboard</td>
+	           			<td><ScoreboardSelect /></td>
+	           		</tr>
 	           		<tr>
 	           			<td><div className="pokerIcon icon" /></td>
 	           			<td >

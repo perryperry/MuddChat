@@ -6,7 +6,7 @@ nav.menu
 
     top: 0;
     left: 0;
-
+    height:80px;
     width: 100%;
     padding: .2em;
 
@@ -28,4 +28,8 @@ nav.menu
 
         width: 45px;
     }
+}
+
+.left {
+    float:left;
 }

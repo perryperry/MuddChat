@@ -1,9 +1,10 @@
 .scoreboardWrap
 {
-    float:left;
-    height:100%;
-    padding: 10px;
-    background-color: #c0c0c0;
+    float:left; 
+    height: 70px;
+    width: auto;
+    overflow: scroll;
+    /*background-color: #c0c0c0;*/
 }
 
 .tableWrap
@@ -16,27 +17,25 @@
 {
     float:left;
     font-family: sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     width: 190px;
-    margin: 5px;
     border-collapse: collapse;
     text-align: right;
-    background-color: #f0f0f0;
+    color:lightgreen;
+    /*background-color: #f0f0f0; */
 }
 .matchupTable thead
 {
     position: relative;
-
     width: 100%;
 }
 
 .matchupTable thead tr
 {
-    height: 15px;
-    margin-top: 5px;
-
-    color: white;
-    background-color: #FC565A;
+    opacity:.3;
+    height:5px;
+    margin-right:3px;
+    background-color: lightblue;
 }
 .matchupTable tbody tr
 {
@@ -50,24 +49,24 @@
 
 .matchupTable td:nth-child(1)
 {
-    padding-bottom: 5px;
+    padding-bottom: 2px;
 }
 
 td[data-rel='record']
 {
-    font-size: 8px;
-
+    font-size: 10px;
     padding: 0;
     padding-right: 5px;
-
     text-align: right;
     vertical-align: top;
+    color: white;
+
 }
 
 td[data-rel='score']
 {
-    padding-top: 10px;
-    padding-right: 10px;
-
+    padding-top: 5px;
+    padding-right: 5px;
     text-align: right;
+    color: white;
 }

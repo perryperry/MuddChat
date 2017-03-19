@@ -1,9 +1,9 @@
 import '../../../stylesheets/Fantasy.scss'
 import Matchup from './Matchup'
 
-const Scoreboard = ({scoreboard=[]}) => {
+const Scoreboard = ({scoreboard=[], cssClass=""}) => {
   return (
-		<div className="scoreboardWrap">
+		<div className="scoreboardWrap {cssClass}">
           {scoreboard.map(function(matchup) {
               return (
                   <Matchup key={matchup.id} matchup={matchup} />
