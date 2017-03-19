@@ -4,6 +4,7 @@ import ScoreboardSelect from '../../Fantasy/containers/ScoreboardSelect'
 import ChatIcon from 'react-icons/lib/fa/comment'
 import News from 'react-icons/lib/fa/newspaper-o'
 import Stats from 'react-icons/lib/fa/bar-chart'
+import HomeIcon from 'react-icons/lib/fa/home'
 import PodcastIcon from 'react-icons/lib/fa/feed'
 import LiveScoringIcon from 'react-icons/lib/fa/balance-scale'
 import '../../../stylesheets/Options.scss'
@@ -19,6 +20,16 @@ const Options = ({loggedIn=false, logOut, clearChat}) => {
 	           		</tr>
 	           	</thead>
 	           	<tbody>
+		           	<tr>
+		       			<td >
+				           	 <Link to="/" className="option icon">
+						     	<HomeIcon />
+						     </Link>
+			     		</td>
+			     		<td>
+			     			
+			     		</td>
+			     	</tr>
 	           		<tr>
 	           			<td>Scoreboard</td>
 	           			<td><ScoreboardSelect /></td>

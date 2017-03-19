@@ -1,8 +1,6 @@
 import { PropTypes } from 'react'
 import { Link } from 'react-router'
 import Scoreboard from '../../Fantasy/containers/Scoreboard'
-
-import HomeIcon from 'react-icons/lib/fa/home'
 import ChatIcon from 'react-icons/lib/fa/comment-o'
 import Options from 'react-icons/lib/fa/bars'
 import Smile from 'react-icons/lib/fa/smile-o'
@@ -30,10 +28,6 @@ const Menu = ({loggedIn=false, showEmojis=false, toggleEmojis}) => {
 		         <Link to="/chat-room" activeClassName="selected">
 		         	<Smile onClick={toggleEmojis}/>
 				 </Link>
-
-			     <Link to="/" activeClassName="selected">
-			     	<HomeIcon />
-			     </Link>
 		    </nav> 
 		)
 	} else {
