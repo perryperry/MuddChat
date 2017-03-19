@@ -5,8 +5,9 @@ const Message = (msg) => {
 
 	return (
 		<div className="message" >
+		{msg}
 			<Emoji/>
-			{msg}
+			
 		</div>
 	)
 

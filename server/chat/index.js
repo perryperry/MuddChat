@@ -28,8 +28,6 @@ io.sockets.on('connection', function (socket) {
 
     console.log("Connections: "  +  connections)
 
-
-
     socket.once('disconnect', function() {
         connections.splice(connections.indexOf(socket), 1);
         socket.disconnect();
@@ -48,7 +46,23 @@ io.sockets.on('connection', function (socket) {
     });
 
      socket.on('send-msg', function(payload) {
-        console.log("Message received from %s: %s, and emoji: %s", payload.username, payload.msg, payload.emoji);
+        payload.time = getTime();
+        console.log("Message received at %s from %s: %s, and emoji: %s", payload.time, payload.username, payload.msg, payload.emoji);
         socket.broadcast.emit('receive-message', payload);
     });
 });
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+function getTime() {
+    var d = new Date();
+    var h = d.getHours(); 
+    var ampm = (h > 11) ? "pm" : "am";
+    h = h % 12;
+    var m = addZero(d.getMinutes());
+    var time = h + ":" + m + " " + ampm;
+    return time;
+}

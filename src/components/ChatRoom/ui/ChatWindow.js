@@ -15,9 +15,10 @@ const ChatWindow = ({messages=[], username="", addMsg}) => {
 
 	               <div key={i} className="messageWrap" >
                         <div className={message.class}>
+                            <span className="username">{message.time}</span>
+                            <span className="username">{message.username}</span>
                             <img className="emoji" src={message.emoji} />
                             <span className="messageSpan">{message.msg}</span>
-                            <span className="username">{message.username}</span>
                         </div>
                         
                     </div>

@@ -25,9 +25,6 @@ io.sockets.on('connection', function (socket) {
     connections.push(socket);
 
 
-
-
-
-
+     
 
 });

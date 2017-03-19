@@ -15,6 +15,7 @@ export const sendMessage = (emoji, message, username) => {
 		emoji: emoji,
 		msg: message,
 		username: username, 
+		time: getTime(),
 		class:"left"
 	}
 	socket.emit('send-msg', payload);
@@ -39,4 +40,20 @@ export const test = (emoji) => {
         type: C.CHANGE_EMOJI,
         payload: emoji
     }
+}
+
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+function getTime() {
+    var d = new Date();
+    var h = d.getHours(); 
+    var ampm = (h > 11) ? "pm" : "am";
+    h = h % 12;
+    var m = addZero(d.getMinutes());
+    var time = h + ":" + m + " " + ampm;
+    return time;
 }
