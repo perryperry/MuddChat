@@ -4,8 +4,9 @@ import { sendCardMove } from '../../../actions/pokerActions'
 
 const mapStateToProps = (state) => {
 	return {
-		board: state.poker_board, 
-		hand: state.poker_hand
+		pokerTable: state.pokerTable, 
+		hand: state.pokerHand,
+		isPlayingPoker: state.isPlayingPoker
 	}
 }
 

@@ -1,11 +1,22 @@
-import PokerHand from './PokerHand'
+import PokerBoard from './PokerBoard'
+import StartGamePrompt from './StartGamePrompt'
 import '../../../stylesheets/Poker.scss'
 
-const PokerTable = ({board={}, hand={}}) => { 
+const PokerTable = ({pokerTable={}, hand=[], isPlayingPoker=false}) => { 
    
     return(
         <div className="poker-table">
-        	 <PokerHand />
+
+        	{
+        		! isPlayingPoker ? 
+        		<PokerBoard board={pokerTable.player2} />
+        	 	: null
+        	}
+        	{
+        		! isPlayingPoker ? 
+        		<PokerBoard board={pokerTable.player1} />
+        	 	: <StartGamePrompt />
+        	}
         </div>
     )
 }

@@ -8,20 +8,15 @@
 	"joinedChat": false,
 	"showEmojis": false,
 	"scoreboard": [],
-	"pokerHand": {
-		"card1": "",
-		"card2": "",
-		"card3": "",
-		"card4": "",
-		"card5": ""
-	},
+	"isPlayingPoker": false,
+	"pokerHand": ["/pics/cards/1.png", "/pics/cards/2.png", "/pics/cards/3.png", "/pics/cards/4.png", "/pics/cards/5.png"],
 	"pokerTable": {
 		"player1": {
-			"hand1": [],
-			"hand2": [],
-			"hand3": [],
-			"hand4": [],
-			"hand5": []
+			"hand1": ["/pics/cards/1.png", "/pics/cards/2.png", "/pics/cards/3.png", "/pics/cards/4.png", "/pics/cards/5.png"],
+			"hand2": ["/pics/cards/11.png", "/pics/cards/12.png", "/pics/cards/13.png", "/pics/cards/14.png", "/pics/cards/15.png"],
+			"hand3": ["/pics/cards/21.png", "/pics/cards/22.png", "/pics/cards/23.png", "/pics/cards/24.png", "/pics/cards/25.png"],
+			"hand4": ["/pics/cards/31.png", "/pics/cards/32.png", "/pics/cards/33.png", "/pics/cards/34.png", "/pics/cards/35.png"],
+			"hand5": ["/pics/cards/41.png", "/pics/cards/42.png", "/pics/cards/43.png", "/pics/cards/44.png", "/pics/cards/45.png"]
 		},
 		"player2": {
 			"hand1": [],

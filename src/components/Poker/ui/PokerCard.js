@@ -1,9 +1,11 @@
 import '../../../stylesheets/Poker.scss'
 
-const PokerCard = () => { 
+const PokerCard = ({url="/pics/cards/back1.png"}) => { 
    
     return(
-        <img className="poker-card" src='/pics/cards/1.png' />
+    	
+        	<img className="poker-card-img" src={url} />
+      
     )
 }
 export default PokerCard
