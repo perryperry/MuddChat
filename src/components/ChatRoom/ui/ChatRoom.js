@@ -14,7 +14,7 @@ const ChatRoom = ({loggedIn=false, joinedChat=false, username="", emojis,showEmo
 	        <div className="chat-wrapper" >
 	        <ChatWindow />
 	           <ChatForm />
-	        {(showEmojis)?
+	        {(showEmojis) ?
 	           <Emojis emojis={emojis} /> : null
 	        }
 	        </div>

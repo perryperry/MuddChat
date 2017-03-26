@@ -8,10 +8,16 @@ const pickEmoji = (e) => {
 	changeEmoji(e.target.src)
 }
 
-const Emoji = ({emoji=""}) => 
+const Emoji = ({emoji="", isToggle=false, click}) => 
 {
    return (
-     	<img src={emoji} className="emoji" onClick={pickEmoji} />
+   	<div>
+   		{
+   			(isToggle == true)? 
+     		<img src={emoji} className="emoji" onClick={click} /> : 
+     		<img src={emoji} className="emoji" onClick={pickEmoji} /> 
+   		}
+   	</div>
     )
 }
 

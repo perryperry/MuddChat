@@ -24,10 +24,6 @@ const Menu = ({loggedIn=false, showEmojis=false, toggleEmojis}) => {
 		        <Link to="/chat-room" activeClassName="selected" >
 		            <ChatIcon />
 		        </Link>
-
-		         <Link to="/chat-room" activeClassName="selected">
-		         	<Smile onClick={toggleEmojis}/>
-				 </Link>
 		    </nav> 
 		)
 	} else {

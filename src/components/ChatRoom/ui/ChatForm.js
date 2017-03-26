@@ -6,7 +6,12 @@ import '../../../stylesheets/ChatRoom.scss'
 import {sendMessage} from '../../../actions/chatActions'
 import Emoji from './Emoji'
 
-const ChatForm = ({loggedIn=false, username="", emoji="/pics/emojis/emoji37.png"}) => { 
+const toggle = () => {
+  alert("Cmon!");
+}
+
+
+const ChatForm = ({loggedIn=false, username="", emoji="/pics/emojis/emoji37.png", toggleEmojis}) => { 
 	const handleChange = (values) => {}
   	const handleUpdate =(form) => {}
   	const handleSubmit =(username, values) => { 
@@ -22,8 +27,9 @@ const ChatForm = ({loggedIn=false, username="", emoji="/pics/emojis/emoji37.png"
 	        onUpdate={(form) => handleUpdate(form)}
 	        onChange={(values) => handleChange(values)}
 	        onSubmit={(values) => handleSubmit(username, values)}>
-          <Emoji emoji={emoji} className="float-left" />
-	        <Control.text model=".message" className="chat-input" />
+          
+	        <Control.text model=".message" className="chat-input float-left" />
+          <Emoji emoji={emoji} isToggle={true} className="float-right" click={toggleEmojis} />
 	         <button className="chat-submit" >Send</button>
 	      </LocalForm>
         </div>

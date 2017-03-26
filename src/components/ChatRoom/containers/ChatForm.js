@@ -1,5 +1,6 @@
 import ChatForm from '../ui/ChatForm'
-import { connect } from 'react-redux'
+import { connect, dispatch } from 'react-redux'
+import {showEmojis} from '../../../actions'
 
 const mapStateToProps = (state) => {
 	return {
@@ -8,7 +9,14 @@ const mapStateToProps = (state) => {
 		emoji: state.emoji
 	}
 }
-
-const Container = connect(mapStateToProps)(ChatForm)
+const mapDispatchToProps = (dispatch) => {	
+	
+	return {
+		toggleEmojis: () => {
+			dispatch(showEmojis())
+		}
+	}
+}
+const Container = connect(mapStateToProps, mapDispatchToProps)(ChatForm)
 
 export default Container

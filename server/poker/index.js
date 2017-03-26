@@ -16,15 +16,20 @@ const app = express()
 
 var server = app.listen(port, () => console.log('Poker server running on port:' + port + ' with a ' + delay/1000 + ' second delay'))
 var connections = [];
+var playernames=[];
 var chatroom = {};
+var count = 1;
 
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
-    console.log("Connection made")
-    connections.push(socket);
-
-
-     
+    
+    if(! connections[socket.username]) {
+    	connections[socket.username]=socket;
+    	playernames.push(socket.username);
+    	count ++;
+    	io.sockets.emit("update-players", playernames);
+    	console.log("Connection made: " + playernames)
+    }
 
 });

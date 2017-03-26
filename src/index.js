@@ -34,3 +34,5 @@ render(
 	</Provider>,
   document.getElementById('react-container')
 )
+
+export default store

@@ -28,3 +28,12 @@ export const pokerTable = (state={}, action) => {
 	  		return state
   	}
 }
+
+export const pokerPlayers = (state=[], action) => {
+	switch(action.type) {
+	    case C.UPDATE_POKER_PLAYERS: 
+	      return action.payload;
+	  	default: 
+	  		return state
+  	}
+}

@@ -2,8 +2,10 @@ import PokerTable from '../ui/PokerTable'
 import { connect } from 'react-redux'
 import { sendCardMove } from '../../../actions/pokerActions'
 
+
 const mapStateToProps = (state) => {
 	return {
+		name: state.username,
 		pokerTable: state.pokerTable, 
 		hand: state.pokerHand,
 		isPlayingPoker: state.isPlayingPoker
