@@ -16,20 +16,30 @@ const app = express()
 
 var server = app.listen(port, () => console.log('Poker server running on port:' + port + ' with a ' + delay/1000 + ' second delay'))
 var connections = [];
-var playernames=[];
+var players=[];
 var chatroom = {};
 var count = 1;
 
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
-    
-    if(! connections[socket.username]) {
-    	connections[socket.username]=socket;
-    	playernames.push(socket.username);
-    	count ++;
-    	io.sockets.emit("update-players", playernames);
-    	console.log("Connection made: " + playernames)
-    }
+
+    socket.on('join-poker-room', function(payload) {
+
+        if(! connections[payload]) {
+            socket.username = payload;
+            connections[payload] = socket;
+            players.push(payload);
+            io.sockets.emit("update-players", players);
+            console.log("Joined: " + socket.username)
+             console.log("Players: " + players)
+        }
+
+    }) 
+
+    socket.on('request-card-game', function(payload) {
+   
+        console.log("Game request made from: " + socket.username)
+    }) 
 
 });

@@ -1,5 +1,16 @@
 import C from '../../constants'
 
+export const isRequestingPoker = (state=false, action) => {
+	switch(action.type) {
+	    case C.IS_REQUESTING_POKER:
+	    	return action.payload;
+	    case C.IS_NOT_REQUESTING_POKER: 
+	      return action.payload;
+	  	default: 
+	  		return state
+  	}
+}
+
 export const isPlayingPoker = (state=false, action) => {
 	switch(action.type) {
 	    case C.IS_PLAYING_POKER:

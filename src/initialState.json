@@ -1,13 +1,12 @@
 {
 	"loggedIn": false, 
 	"username": "Perry",
-	"chatSent": [],
-	"chatReceived": [],
 	"messages": [],
 	"emoji": "/pics/emojis/emoji1.png",
 	"joinedChat": false,
 	"showEmojis": false,
 	"scoreboard": [],
+	"isRequestingPoker": false,
 	"isPlayingPoker": false,
 	"pokerHand": ["/pics/cards/1.png", "/pics/cards/2.png", "/pics/cards/3.png", "/pics/cards/4.png", "/pics/cards/5.png"],
 	"pokerTable": {

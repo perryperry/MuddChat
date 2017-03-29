@@ -4,13 +4,17 @@ import StartGamePrompt from '../ui/StartGamePrompt'
 
 const mapStateToProps = (state) => {
 	return {
+		username: state.username,
 		players: state.pokerPlayers
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		requestGame: (payload) => { dispatch(sendGameRequest(payload)) }
+		requestGame: (payload) => { 
+			console.log("requesting poker game" + payload);
+			dispatch(sendGameRequest(payload)) 
+		}
 	}
 }
 
