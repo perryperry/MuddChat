@@ -8,9 +8,29 @@ import store from '../index'
 const socket = io.connect(`http://localhost:3765`)
 
 socket.on('connect', function() {
-	socket.emit('join-poker-room', store.getState().username, function(){});
-	console.log("connected?");
+	if(store.getState().loggedIn) {
+		joinPoker();
+	}
 }); 
+
+socket.on('update-players', function(payload) {
+    store.dispatch(updatePlayers(payload));
+});
+
+socket.on('receive-card-game-request', function(payload) {
+	alert("Game request received from: " + payload);
+	store.dispatch(displayReceivedPokerRequest(payload));
+});
+
+export const joinPoker = () => {
+	socket.emit('join-poker-room', store.getState().username, function() {
+		console.log("connected to poker room");
+	});
+}
+
+export const quitPoker = () => {
+	socket.emit('quit', store.getState().username);
+}
 
 export const updatePlayers = (payload) => {
 	return {
@@ -18,14 +38,6 @@ export const updatePlayers = (payload) => {
 		payload: payload
     }
 } 
-
-socket.on('update-players', function(payload) {
-    alert('Received update-players: ' + payload);
-
-    store.dispatch(updatePlayers(payload));
-});
-
-
 
 export const sendCardMove = (payload) => {
 	return {
@@ -36,12 +48,22 @@ export const sendCardMove = (payload) => {
 
 export const sendGameRequest = (payload) => {
 	console.log("inside sendGameRequest");
-	socket.emit('join-poker-room', payload, function(data) {
+	socket.emit('request-card-game', payload, function(data) {
 		console.log("it responded");
 	});
 	return {
 		type: C.IS_REQUESTING_POKER,
 		payload: true
+	}
+}
+
+export const displayReceivedPokerRequest = (payload) => {
+	return {
+		type: C.RECEIVED_POKER_REQUEST,
+		payload: {
+			from: payload,
+			isRequesting: true
+		}
 	}
 }
 

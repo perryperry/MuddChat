@@ -3,10 +3,10 @@ import '../../../stylesheets/Poker.scss'
 
 const StartGamePrompt = ({username="", players=[], requestGame}) => { 
    
-   const test = () => {
+   const requestPokerGame = () => {
         var e = document.getElementById("selectPoker");
-        console.log("Here: " + e.options[e.selectedIndex].value);
-        requestGame(username);
+        console.log("Requesting game against: " + e.options[e.selectedIndex].value);
+        requestGame(e.options[e.selectedIndex].value);
    }
 
     return(
@@ -22,7 +22,7 @@ const StartGamePrompt = ({username="", players=[], requestGame}) => {
                     }
             </select>
 
-            <button className="poker-prompt-btn" onClick={test} >Request Game</button>
+            <button className="poker-prompt-btn" onClick={requestPokerGame} >Request Game</button>
         </div>
     )
 }

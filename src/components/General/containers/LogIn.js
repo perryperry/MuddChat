@@ -1,6 +1,7 @@
 import LogIn from '../ui/LogIn'
 import { connect } from 'react-redux'
 import { tryLogIn, setUserName} from '../../../actions'
+import {joinPoker} from '../../../actions/pokerActions'
 
 const mapStateToProps = state => ({
 	loggedIn: state.loggedIn,
@@ -13,6 +14,7 @@ const mapDispatchToProps = (dispatch) => {
 		logIn: (name) => {
 			dispatch(tryLogIn(name)),
 			dispatch(setUserName(name))
+			joinPoker();
 		}
 	}
 }

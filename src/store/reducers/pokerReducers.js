@@ -48,3 +48,12 @@ export const pokerPlayers = (state=[], action) => {
 	  		return state
   	}
 }
+
+export const receivedPokerRequest = (state={}, action) => {
+	switch(action.type) {
+	    case C.RECEIVED_POKER_REQUEST: 
+	      return action.payload;
+	  	default: 
+	  		return state
+  	}
+}

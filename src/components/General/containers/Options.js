@@ -1,6 +1,7 @@
 import Options from '../ui/Options'
 import { connect } from 'react-redux'
 import {logOutUser, clearMessages} from '../../../actions'
+import {quitPoker} from '../../../actions/pokerActions'
 
 const mapStateToProps = (state) => {
 	return {
@@ -14,6 +15,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(clearMessages());
 		},
 		logOut : () => {
+			quitPoker();
 			dispatch(logOutUser());
 		}
 	}

@@ -6,6 +6,10 @@
 	"joinedChat": false,
 	"showEmojis": false,
 	"scoreboard": [],
+	"receivedPokerRequest": {
+		"from": "",
+		"isRequesting": false
+	},
 	"isRequestingPoker": false,
 	"isPlayingPoker": false,
 	"pokerHand": ["/pics/cards/1.png", "/pics/cards/2.png", "/pics/cards/3.png", "/pics/cards/4.png", "/pics/cards/5.png"],

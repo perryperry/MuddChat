@@ -3,7 +3,7 @@ import { reducer as formReducer } from 'redux-form'
 import { combineReducers } from 'redux'
 import {messages, joinedChat, emojis, emoji, showEmojis} from './chatReducers'
 import { scoreboard } from './fantasyReducers'
-import {isPlayingPoker, pokerHand, pokerTable, pokerPlayers, isRequestingPoker} from './pokerReducers'
+import {isPlayingPoker, pokerHand, pokerTable, pokerPlayers, isRequestingPoker, receivedPokerRequest} from './pokerReducers'
 
 export const errors = (state=[], action) => {
   switch(action.type) {
@@ -64,6 +64,7 @@ export default combineReducers({
   pokerHand,
   pokerTable,
   pokerPlayers,
+  receivedPokerRequest,
   form: formReducer
 })
 
