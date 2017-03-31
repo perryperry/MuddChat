@@ -67,6 +67,14 @@ io.sockets.on('connection', function (socket) {
         }
     }) 
 
+    socket.on('accept-game-request', function(payload) {
+        console.log("acceptance received to play against " + payload);
+    });
+
+    socket.on('decline-game-request', function(payload) {
+        console.log("declination received not play against " + payload);
+    });
+
 });
 
 function disconnectPlayer(username) {

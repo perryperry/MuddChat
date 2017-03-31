@@ -3,8 +3,6 @@ import {connect, dispatch} from 'react-redux'
 import io from 'socket.io-client'
 import store from '../index'
 
-
-
 const socket = io.connect(`http://localhost:3765`)
 
 socket.on('connect', function() {
@@ -18,7 +16,7 @@ socket.on('update-players', function(payload) {
 });
 
 socket.on('receive-card-game-request', function(payload) {
-	alert("Game request received from: " + payload);
+	console.log("Game request received from: " + payload);
 	store.dispatch(displayReceivedPokerRequest(payload));
 });
 
@@ -63,6 +61,41 @@ export const displayReceivedPokerRequest = (payload) => {
 		payload: {
 			from: payload,
 			isRequesting: true
+		}
+	}
+}
+
+export const acceptPokerGame = (payload) => {
+	console.log("ACTION: acceptPokerGame from " + payload.from);
+
+	socket.emit('accept-game-request', payload.from, function() {
+		console.log("acceptance received by " + payload.from);
+
+
+
+	});
+
+	return {
+		type: C.ACCEPT_POKER_GAME,
+		payload: {
+			from: payload,
+			isRequesting: false
+		}
+	}
+}
+
+export const declinePokerGame = (payload) => {
+	console.log("ACTION: declinePokerGame from " + payload.from);
+
+	socket.emit('decline-game-request', payload.from, function() {
+		console.log("declination received by " + payload.from);
+	});
+
+	return {
+		type: C.DECLINE_POKER_GAME,
+		payload: {
+			from: payload,
+			isRequesting: false
 		}
 	}
 }

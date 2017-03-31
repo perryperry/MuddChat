@@ -1,3 +1,25 @@
+.pokerRequestBtn {
+	margin: 10px;
+}
+
+.pokerRequestIcon {
+	width: 41px;
+	height:57px;
+	background-image: url('/pics/cards/27.png');
+	background-size: 100%;
+	float:left;
+	margin-right:15px;
+}
+
+.poker-request-notification {
+	background-color:#18a851;
+	font-family: sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	color:white;
+	padding:15px;
+}
+
 .poker-prompt {
 	
 	display:block;

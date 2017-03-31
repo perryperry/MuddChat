@@ -53,6 +53,10 @@ export const receivedPokerRequest = (state={}, action) => {
 	switch(action.type) {
 	    case C.RECEIVED_POKER_REQUEST: 
 	      return action.payload;
+	    case C.ACCEPT_POKER_GAME:
+	    	return action.payload;
+	    case C.DECLINE_POKER_GAME:
+	    	return action.payload;
 	  	default: 
 	  		return state
   	}
